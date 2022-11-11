@@ -1,0 +1,41 @@
+.container {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.container-flex {
+	width: 100%;
+	height: 100%;
+	display: flex;
+}
+
+.justify-content-center {
+	justify-content: center;
+}
+
+.align-items-center {
+	align-items: center;
+}
+
+.full-height {
+	height: 100% !important;
+}
+
+.full-width {
+	width: 100% !important;
+}
+
+.form-label {
+	font-weight: bold;
+}
+
+.ui-card-content table {
+	width: 100%;
+}
+
+.ui-card-content table input {
+	width: 100%;
+}

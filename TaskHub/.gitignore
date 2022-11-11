@@ -1,0 +1,38 @@
+# Created by https://www.toptal.com/developers/gitignore/api/maven,eclipse
+# Edit at https://www.toptal.com/developers/gitignore?templates=maven,eclipse
+
+### Eclipse ###
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+
+# Java annotation processor (APT)
+.factorypath
+
+
+### Maven ###
+target/
+
+# Eclipse m2e generated files
+# Eclipse Core
+.project
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
+
+# End of https://www.toptal.com/developers/gitignore/api/maven,eclipse
+/.tern-project

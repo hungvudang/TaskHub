@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:insert name="meta"/>
+	
+	<h:head>
+		<title>TaskHub</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+		<meta name="viewport" content="width=device-width,maximum-scale=2" />
+	</h:head> 
+	
+	<h:body>
+		<ui:include src="/WEB-INF/includes/_scripts_and_stylesheets.xhtml" />
+		<p:growl id="messages" showDetail="true">
+			<p:autoUpdate/>
+		</p:growl>
+		
+		<h:panelGroup styleClass="container" onkeypress="disableEnterKeyFormSubmission(event);" style="overflow-y: hidden;" layout="block">
+			<ui:insert name="overlaysAndPopupPanels" />
+			
+			<p:outputPanel id="content" styleClass="wapper full-height">
+				<ui:insert name="content" />
+			</p:outputPanel>
+		</h:panelGroup>
+	</h:body>
+</html>
