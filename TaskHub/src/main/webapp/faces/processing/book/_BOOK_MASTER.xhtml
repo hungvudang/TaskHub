@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+
+<ui:composition >
+	<ui:param name="new" value="#{bookBean.current_book_new ne null}" />
+	<ui:param name="ost" value="#{bookBean.current_book_ost ne null}" />
+	
+	<ui:param name="bookCode" 
+			  value="#{new ? 
+			  			bookBean.current_book_new.book_code : ost ? 
+			  													bookBean.current_book_ost.book_code : ''}" />
+	
+	<div align="center">
+		<h3 style="margin: 5px 0">Book Management #{not empty bookCode ? '- [ '.concat(bookCode).concat(' ]') : ''}</h3>
+	</div>
+	
+	<ui:fragment rendered="#{bookBean.current_book_new eq null and bookBean.current_book_ost eq null}">
+		<p:tabView cache="true"
+				   dynamic="true">
+			<ui:include src="summary/summary_master.xhtml" />
+		</p:tabView>
+	</ui:fragment>
+	
+	<ui:fragment rendered="#{bookBean.current_book_new ne null or bookBean.current_book_ost ne null}">
+		<ui:include src="details/detail_master.xhtml" />
+	</ui:fragment>
+</ui:composition>
+</html>

@@ -2,7 +2,7 @@ package taskhub.action.service;
 
 import java.util.Objects;
 
-import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -10,6 +10,7 @@ import javax.inject.Named;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 
+import taskhub.cdi.helper.ConversationHelper;
 import taskhub.persistence.QueryHelper;
 import taskhub.persistence.entity.LoginModel;
 import taskhub.persistence.entity.Mt_user;
@@ -17,13 +18,18 @@ import taskhub.persistence.entity.Mt_user_;
 
 @SuppressWarnings("serial")
 @Named
-@ConversationScoped
+@ApplicationScoped
 public class AuthServiceHelper extends AbstractService {
 
 	private static final ThreadLocal<Mt_user> LOCAL_CONTEXT = new ThreadLocal<Mt_user>();
 
 	@Inject
+	private FormSwitcher formSwitcher;
+
+	@Inject
 	private LoginModel model;
+
+	private boolean guest = false;
 
 	public boolean isLoggedIn() {
 		return !Objects.isNull(LOCAL_CONTEXT.get());
@@ -32,6 +38,7 @@ public class AuthServiceHelper extends AbstractService {
 	public void login() {
 		if (this.model != null) {
 			if (this.authenticate()) {
+				this.formSwitcher.home();
 				FacesContext.getCurrentInstance().addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfuly", ""));
 			} else {
@@ -40,6 +47,17 @@ public class AuthServiceHelper extends AbstractService {
 						"Faild", "You have entered invalid username or password. Please try again."));
 			}
 		}
+	}
+
+	public void logout() {
+
+		ConversationHelper.endIfNotTransient();
+	}
+
+	public void loginAsGuest() {
+		this.guest = true;
+		AuthServiceHelper.LOCAL_CONTEXT.set(null);
+		ConversationHelper.beginIfTransient();
 	}
 
 	private boolean authenticate() {
@@ -54,7 +72,13 @@ public class AuthServiceHelper extends AbstractService {
 		} catch (NoResultException | NonUniqueResultException e) {
 			AuthServiceHelper.LOCAL_CONTEXT.set(null);
 			return false;
+		} finally {
+			this.guest = false;
 		}
+	}
+
+	public void clear() {
+		AuthServiceHelper.LOCAL_CONTEXT.set(null);
 	}
 
 	public LoginModel getModel() {
@@ -63,6 +87,14 @@ public class AuthServiceHelper extends AbstractService {
 
 	public void setModel(LoginModel model) {
 		this.model = model;
+	}
+
+	public boolean isGuest() {
+		return this.guest;
+	}
+
+	public void setGuest(boolean guest) {
+		this.guest = guest;
 	}
 
 }

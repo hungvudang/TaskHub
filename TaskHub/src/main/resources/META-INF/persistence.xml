@@ -8,6 +8,8 @@
 	<class>taskhub.persistence.entity.Mt_user</class>
 	<class>taskhub.persistence.entity.Mt_document_numbering_scheme</class>
 	<class>taskhub.persistence.entity.Mt_employee</class>
+	<class>taskhub.persistence.entity.Book_new_hdr</class>
+	<class>taskhub.persistence.entity.Book_ost_hdr</class>
 	<exclude-unlisted-classes>true</exclude-unlisted-classes>
 	
 	<properties>

@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+
+<ui:composition >
+	<h:form styleClass="full-height">
+		<p:commandButton value="New"
+						 icon="pi pi-plus"
+						 process="@this"
+						 action="#{bookBean.create()}"
+						 update=":content"
+						 style="margin: .2em .5em .5em 0"
+						 styleClass="ui-button ui-button-outlined"/>
+		
+		<p:dataTable value="#{bookBean.book_new_hdrs}"
+					 var="book"
+					 rows="10"
+					 styleClass="pfs-summary-datatable"
+					 paginator="true"
+					 paginatorAlwaysVisible="true"
+					 paginatorPosition="bottom"
+					 scrollable="true"
+					 scrollHeight="250">
+					 
+			<p:column headerText="Book Code">
+				<p:commandLink value="#{book.book_code}"
+							   process="@this"
+							   update=":content">
+					<f:setPropertyActionListener value="#{book}" target="#{bookBean.current_book_new}"/>
+				</p:commandLink>
+			</p:column>
+			
+			<p:column headerText="Title">
+				<p:outputLabel value="#{book.title}"/>
+			</p:column>
+			
+			<p:column headerText="Author">
+				<p:outputLabel value="#{book.author}"/>
+			</p:column>
+			
+			<p:column headerText="Category">
+				<p:outputLabel value="#{book.book_category.label}"/>
+			</p:column>
+			
+			<p:column headerText="Release Date">
+				<p:datePicker value="#{book.date_release}" 
+							  disabled="true"
+							  pattern="dd/MM/yyyy"/>
+			</p:column>
+			
+			
+		</p:dataTable>
+	</h:form>
+</ui:composition>
+</html>

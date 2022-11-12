@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:form>
+		<p:commandButton icon="pi pi-angle-left"
+						 title="Back to Summary"
+						 process="@this"
+						 update=":content"
+						 action="#{bookBean.switchToSummary()}"
+						 style="margin: .2em .5em 0 .8em"
+						 styleClass="ui-button ui-button-flat"/>
+						 
+		<p:commandButton value="Revise"
+						 icon="pi pi-pencil"
+						 process="@this"
+						 action="#{bookBean.revise()}"
+						 update=":content"
+						 disabled="#{bookBean.current_book_ost.variation}"
+						 style="margin: .2em .5em 0 .8em"
+						 styleClass="ui-button ui-button-outlined"/>
+		<div align="center">
+			<p:outputPanel layout="block" style="display: flex;
+												 justify-content: space-between;
+										         width: 100%;">
+										         
+				<p:outputPanel layout="block">
+					<p:panelGrid styleClass="ui-noborder full-width">
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Title" styleClass="mandatory"/>
+							</p:column>
+							
+							<p:column colspan="3">
+								<p:outputLabel value="#{bookBean.current_book_ost.title}" 
+											   style="width: 100%"
+											   label="Title"/>
+							</p:column>
+						</p:row>
+						
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Author" styleClass="mandatory"/>
+							</p:column>
+							
+							<p:column colspan="3">
+								<p:outputLabel value="#{bookBean.current_book_ost.author}"  
+											   style="width: 100%"
+											   label="Author"/>
+							</p:column>
+						</p:row>
+						
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Description"/>
+							</p:column>
+							
+							<p:column colspan="3">
+								<p:inputTextarea value="#{bookBean.current_book_ost.book_desc}" 
+												 style="width: 100%" 
+												 disabled="true"/>
+							</p:column>
+						</p:row>
+						
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Release Date" styleClass="mandatory"/>
+							</p:column>
+							
+							<p:column>
+								<p:datePicker value="#{bookBean.current_book_ost.date_release}"
+											  style="width: 100%"
+											  label="Release Date"
+											  disabled="true"
+											  pattern="dd/MM/yyyy"/>
+							</p:column>
+							
+							<p:column>
+								<p:outputLabel value="Number of Page"/>
+							</p:column>
+							
+							<p:column>
+								<p:outputLabel value="#{bookBean.current_book_ost.number_of_page}" 
+											   style="width: 100%"/>
+							</p:column>
+							
+							<p:row>
+							
+							<p:column>
+								<p:outputLabel value="Category"/>
+							</p:column>
+							
+							<p:column>
+								<p:outputLabel value="#{bookBean.current_book_ost.book_category.label}"/>
+							</p:column>
+						</p:row>
+							
+						</p:row>
+					</p:panelGrid>
+				</p:outputPanel>
+				<p:outputPanel styleClass="pfs-book-img" layout="block" style="width: 30%">
+					<p:graphicImage value="#{bookBean.current_book_ost.book_img}"
+									width="300"
+									height="400"
+									stream="#{bookBean.current_book_ost.book_img eq null ? true : false}"/>
+				</p:outputPanel>
+			</p:outputPanel>
+		</div>				 
+	</h:form>
+</ui:composition>
+</html>

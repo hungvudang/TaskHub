@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:form>
+		<p:commandButton icon="pi pi-angle-left"
+						 title="Back to Summary"
+						 process="@this"
+						 update=":content"
+						 action="#{bookBean.switchToSummary()}"
+						 style="margin: .2em .5em 0 .8em"
+						 styleClass="ui-button ui-button-flat"/>
+						 
+		<p:commandButton value="Submit"
+						 process="@this"
+						 update=":content"
+						 action="#{bookBean.submit()}"
+						 style="margin: .2em .5em 0 .8em"
+						 styleClass="ui-button ui-button-outlined">
+			<p:confirm header="Confirm" message="Are you sure ?"/>
+		</p:commandButton>
+						 
+		<p:commandButton value="Delete"
+						 process="@this"
+						 action="#{bookBean.delete()}"
+						 update=":content"
+						 style="margin: .2em .5em 0 .8em"
+						 styleClass="ui-button ui-button-outlined ui-button-danger">
+			<p:confirm header="Confirm" message="Are you sure ?"/>				 
+		</p:commandButton>
+		<div align="center">
+			<p:outputPanel layout="block" style="display: flex;
+												 justify-content: space-between;
+										         width: 100%;">
+										         
+				<p:outputPanel layout="block">
+					<p:panelGrid styleClass="ui-noborder full-width">
+						<p:row>
+							<p:column >
+								<p:outputLabel value="Title" styleClass="mandatory"/>
+							</p:column>
+							
+							<p:column colspan="3">
+								<p:inputText value="#{bookBean.current_book_new.title}" 
+											 style="width: 100%"
+											 label="Title"
+											 required="true">
+									<p:ajax event="change" update="@this" process="@this"/>
+								</p:inputText>
+							</p:column>
+						</p:row>
+						
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Author" styleClass="mandatory"/>
+							</p:column>
+							
+							<p:column colspan="3">
+								<p:inputText value="#{bookBean.current_book_new.author}" 
+											 style="width: 100%"
+											 label="Author"
+											 required="true">
+									<p:ajax event="change" update="@this" process="@this"/>
+								</p:inputText>
+							</p:column>
+						</p:row>
+						
+						<p:row>
+							<p:column >
+								<p:outputLabel value="Description"/>
+							</p:column>
+							
+							<p:column colspan="3">
+								<p:inputTextarea value="#{bookBean.current_book_new.book_desc}" style="width: 100%">
+									<p:ajax event="change" update="@this" process="@this"/>
+								</p:inputTextarea>
+							</p:column>
+						</p:row>
+						
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Release Date" styleClass="mandatory"/>
+							</p:column>
+							
+							<p:column>
+								<p:datePicker value="#{bookBean.current_book_new.date_release}"
+											  style="width: 100%"
+											  label="Release Date"
+											  required="true"
+											  pattern="dd/MM/yyyy">
+									<p:ajax event="change" update="@this" process="@this"/>
+								</p:datePicker>
+							</p:column>
+							
+							<p:column>
+								<p:outputLabel value="Number of Page"/>
+							</p:column>
+							
+							<p:column>
+								<p:inputNumber value="#{bookBean.current_book_new.number_of_page}"
+											   style="width: 100%"
+											   emptyValue="0">
+									<p:ajax event="change" update="@this" process="@this"/>
+								</p:inputNumber>
+							</p:column>
+							
+						</p:row>
+						
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Category"/>
+							</p:column>
+							
+							<p:column>
+								<p:selectOneMenu value="#{bookBean.current_book_new.book_category}">
+									<f:selectItems value="#{bookBean.bookCategorySelectItem}"/>
+									<p:ajax update="@this" process="@this"/>
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:outputPanel>
+				<p:outputPanel styleClass="pfs-book-img" layout="block" style="width: 30%">
+					<p:graphicImage value="#{bookBean.current_book_new.book_img}"
+									width="300"
+									height="400"
+									stream="#{bookBean.current_book_new.book_img eq null ? true : false}"/>
+					<div align="center">
+						<p:fileUpload process="@this"
+									  update="@(.pfs-book-img)"
+									  label="Upload"
+									  styleClass="pfs-fileUpload-immediate"
+									  auto="true"
+									  listener="#{bookBean.updateImage}" 
+									  mode="simple" 
+									  skinSimple="true"/>
+					</div>
+				</p:outputPanel>
+			</p:outputPanel>
+		</div>
+	</h:form>
+</ui:composition>
+</html>

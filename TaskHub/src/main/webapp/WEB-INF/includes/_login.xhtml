@@ -13,11 +13,11 @@
 	<h:form id="loginForm" styleClass="full-height">
 		<p:outputPanel styleClass="container-flex justify-content-center align-items-center">
 				<p:card style="width: 22em" >
-					<f:facet name="header">
+					<!-- <f:facet name="header">
 						<div align="center">
 							<h1>LOGIN</h1>
 						</div>
-					</f:facet>
+					</f:facet> -->
 					<f:facet name="title">
 						<div align="center">
 							<h:graphicImage value="/resources/layout/img/Logo_PTIT_University.png" height="240" width="240"/>
@@ -25,7 +25,6 @@
 					</f:facet>
 					
 					<h:panelGrid columns="1">
-					
 						<p:inputText id="username" 
 									 label="User Name"
 									 placeholder="User Name" 
@@ -41,14 +40,22 @@
 									
 						<p:message for="password"/>
 						
+						<p:outputPanel style="display:flex; 
+											  justify-content: end;">
+											  
+							<p:commandLink value="Continue as Guest"
+										   process="@this"
+										   ajax="false" 
+										   action="#{authServiceHelper.loginAsGuest()}"/>
+						</p:outputPanel>
 					</h:panelGrid>
 					 
 					<f:facet name="footer">
 						<div align="center">
 							<p:commandButton styleClass="ui-button-outlined" 
 											 value="Login"
-											 process="@form"
-											 update="loginForm"
+											 process="@this"
+											 ajax="false"
 											 action="#{authServiceHelper.login()}"/>
 						</div>
 					</f:facet>

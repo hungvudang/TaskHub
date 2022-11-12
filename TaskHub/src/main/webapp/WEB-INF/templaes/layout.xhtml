@@ -20,12 +20,18 @@
 			<p:autoUpdate/>
 		</p:growl>
 		
-		<h:panelGroup styleClass="container" onkeypress="disableEnterKeyFormSubmission(event);" style="overflow-y: hidden;" layout="block">
+		<h:panelGroup styleClass="container" onkeypress="disableEnterKeyFormSubmission(event);" layout="block">
 			<ui:insert name="overlaysAndPopupPanels" />
 			
 			<p:outputPanel id="content" styleClass="wapper full-height">
 				<ui:insert name="content" />
 			</p:outputPanel>
 		</h:panelGroup>
+		
+		
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+            <p:commandButton value="No" styleClass="ui-confirmdialog-no ui-button-flat"/>
+            <p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" />
+        </p:confirmDialog>
 	</h:body>
 </html>

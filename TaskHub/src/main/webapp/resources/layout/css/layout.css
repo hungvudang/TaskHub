@@ -1,3 +1,4 @@
+
 .container {
 	position: fixed;
 	left: 0;
@@ -39,3 +40,19 @@
 .ui-card-content table input {
 	width: 100%;
 }
+
+.mandatory::after {
+	content: " *";
+	color: #F86568;
+}
+
+.pfs-fileUpload-immediate .ui-fileupload-filename {
+	display: none;
+}
+
+body .ui-datatable thead th {
+	padding: .7em .7em;
+	text-align: center;
+}
+
+

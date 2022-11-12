@@ -9,10 +9,17 @@
 	</ui:define>
 
 	<ui:define name="overlaysAndPopupPanels">
+        
 	</ui:define>
 
 	<ui:define name="content">
-		<ui:include src="/WEB-INF/includes/login.xhtml" />
+		<ui:fragment rendered="#{not authServiceHelper.guest and not authServiceHelper.loggedIn}">
+			<ui:include src="/WEB-INF/includes/_login.xhtml" />
+		</ui:fragment>
+		
+		<ui:fragment rendered="#{authServiceHelper.guest or authServiceHelper.loggedIn}">
+			<ui:include src="/WEB-INF/includes/_home.xhtml" />
+		</ui:fragment>
 	</ui:define>
 
 </ui:composition>
