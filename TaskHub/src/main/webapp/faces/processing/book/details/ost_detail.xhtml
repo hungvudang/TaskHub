@@ -32,6 +32,7 @@
 										         
 				<p:outputPanel layout="block">
 					<p:panelGrid styleClass="ui-noborder full-width">
+						<!-- TITLE -->
 						<p:row>
 							<p:column>
 								<p:outputLabel value="Title" styleClass="mandatory"/>
@@ -44,6 +45,7 @@
 							</p:column>
 						</p:row>
 						
+						<!-- AUTHOR -->
 						<p:row>
 							<p:column>
 								<p:outputLabel value="Author" styleClass="mandatory"/>
@@ -56,6 +58,7 @@
 							</p:column>
 						</p:row>
 						
+						<!-- DESCRIPTION -->
 						<p:row>
 							<p:column>
 								<p:outputLabel value="Description"/>
@@ -69,6 +72,7 @@
 						</p:row>
 						
 						<p:row>
+							<!-- RELEASE DATE -->
 							<p:column>
 								<p:outputLabel value="Release Date" styleClass="mandatory"/>
 							</p:column>
@@ -81,6 +85,7 @@
 											  pattern="dd/MM/yyyy"/>
 							</p:column>
 							
+							<!-- NUMBER OF PAGE -->
 							<p:column>
 								<p:outputLabel value="Number of Page"/>
 							</p:column>
@@ -89,9 +94,10 @@
 								<p:outputLabel value="#{bookBean.current_book_ost.number_of_page}" 
 											   style="width: 100%"/>
 							</p:column>
-							
-							<p:row>
-							
+						</p:row>
+						
+						<!-- CATEGORY -->
+						<p:row>
 							<p:column>
 								<p:outputLabel value="Category"/>
 							</p:column>
@@ -99,8 +105,6 @@
 							<p:column>
 								<p:outputLabel value="#{bookBean.current_book_ost.book_category.label}"/>
 							</p:column>
-						</p:row>
-							
 						</p:row>
 					</p:panelGrid>
 				</p:outputPanel>
