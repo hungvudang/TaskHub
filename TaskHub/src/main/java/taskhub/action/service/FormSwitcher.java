@@ -38,10 +38,9 @@ public class FormSwitcher extends AbstractService {
 	public void switchToFormCode(final FormCode formCode) {
 		viewParamService.resetInfo();
 		ConversationHelper.endIfNotTransient();
-		
 		if (formCode != null) {
 			this.viewParamService.setActiveFormCode(formCode);
-			ConversationHelper.beginIfTransient();
+			ConversationHelper.beginIfTransient(); 
 		}
 		
 		

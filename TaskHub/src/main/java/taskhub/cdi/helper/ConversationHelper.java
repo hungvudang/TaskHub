@@ -1,5 +1,8 @@
 package taskhub.cdi.helper;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -17,7 +20,7 @@ import taskhub.cdi.Instances;
 @ApplicationScoped
 @Named
 public class ConversationHelper {
-	
+	private static final Logger LOG = Logger.getLogger(ConversationHelper.class.getName());
 	@Inject
 	private Conversation conversation;
 	
@@ -25,6 +28,7 @@ public class ConversationHelper {
 	public void conversationInitialized(@Observes @Initialized(ConversationScoped.class) final ServletRequest payload) {
 		final String getRequestURI = ((HttpServletRequest) payload).getRequestURI();
 		if (!getRequestURI.contains(ResourceHandler.RESOURCE_IDENTIFIER)) {
+			LOG.log(Level.INFO, "Conversation Initialized");
 			this.conversation.setTimeout(7200000L); // 2 hours
 		}
 	}
@@ -32,6 +36,7 @@ public class ConversationHelper {
 	public void conversationDestroyed(@Observes @Destroyed(ConversationScoped.class) final ServletRequest payload) {
 		final String getRequestURI = ((HttpServletRequest) payload).getRequestURI();
 		if (!getRequestURI.contains(ResourceHandler.RESOURCE_IDENTIFIER)) {
+			LOG.log(Level.INFO, "Conversation Destroyed");
 		}
 	}
 	

@@ -8,7 +8,9 @@
 	<p:importConstants type="taskhub.persistence.constant.FormCode" var="formCode"/>
 	<h:form>
 		<p:menubar>
-			 <p:menuitem ajax="false"
+			 <p:menuitem process="@this"
+			 			 update=":content"
+			 			 immediate="true"
 			 			 action="#{formSwitcher.home()}"
 			 			 ignoreAutoUpdate="true">
 			 	<i class="pi pi-home" 
@@ -16,19 +18,19 @@
 			 </p:menuitem>
 			 
 			 <p:submenu label="Processing">
-			 	 <p:menuitem value="Sales" action="#{menuBean._switch()}" process="@this" update=":content"> 
+			 	 <p:menuitem value="Sales" action="#{menuBean._switch()}" process="@this" update=":content" immediate="true" ignoreAutoUpdate="true"> 
 			 	 	<f:setPropertyActionListener value="#{formCode.SALES}" target="#{menuBean.currentForm}"/>
 			 	 </p:menuitem>
 			 </p:submenu>
 			 
 			 <p:submenu label="Master Setup">
-			 	 <p:menuitem value="Customer" action="#{menuBean._switch()}" process="@this" update=":content"> 
+			 	 <p:menuitem value="Customer" action="#{menuBean._switch()}" process="@this" update=":content" immediate="true" ignoreAutoUpdate="true"> 
 			 	 	<f:setPropertyActionListener value="#{formCode.CUSTOMER}" target="#{menuBean.currentForm}"/>
 			 	 </p:menuitem>
 			 </p:submenu>
 			 
 			  <p:submenu label="Demo">
-			  	 <p:menuitem value="Book Management" action="#{menuBean._switch()}" process="@this" update=":content"> 
+			  	 <p:menuitem value="Book Management" action="#{menuBean._switch()}" process="@this" update=":content" immediate="true" ignoreAutoUpdate="true"> 
 			 	 	<f:setPropertyActionListener value="#{formCode.BOOK_MANAGEMENT}" target="#{menuBean.currentForm}"/>
 			 	 </p:menuitem>
 			 </p:submenu>
@@ -41,6 +43,8 @@
 		 							 process="@this"
 		 							 icon="pi pi-sign-in"
 		 							 ajax="false"
+		 							 immediate="true"
+		 							 ignoreAutoUpdate="true"
 		 							 styleClass="ui-button-raised ui-button-secondary ui-button-flat" />
 		 		</ui:fragment>
 		 		
