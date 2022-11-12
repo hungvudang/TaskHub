@@ -1,4 +1,4 @@
-package taskhub.persistence.entity.constant;
+package taskhub.persistence.constant;
 
 public enum BookCategory {
 	BUSINESS("Business"),

@@ -5,7 +5,16 @@
 	  xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
+	<ui:param name="srcForm" value="#{viewParamService.locateSrcForm()}" />
 	<ui:include src="_header_bar.xhtml"/>
-	<ui:include src="/faces/processing/book/_BOOK_MASTER.xhtml" />
+	<ui:fragment rendered="#{srcForm eq null}">
+		<div align="center">
+			<h3>Wellcome to TaskHub</h3>
+		</div>
+	</ui:fragment>
+	
+	<ui:fragment rendered="#{srcForm ne null}">
+		<ui:include src="#{srcForm}" />
+	</ui:fragment>
 </ui:composition>
 </html>

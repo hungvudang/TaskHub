@@ -11,9 +11,9 @@ import javax.inject.Named;
 import org.primefaces.event.FileUploadEvent;
 
 import taskhub.action.service.BookService;
+import taskhub.persistence.constant.BookCategory;
 import taskhub.persistence.entity.Book_new_hdr;
 import taskhub.persistence.entity.Book_ost_hdr;
-import taskhub.persistence.entity.constant.BookCategory;
 
 @SuppressWarnings("serial")
 @Named

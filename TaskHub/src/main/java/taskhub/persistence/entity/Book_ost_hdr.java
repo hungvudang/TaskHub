@@ -12,7 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
-import taskhub.persistence.entity.constant.BookCategory;
+import taskhub.persistence.constant.BookCategory;
 
 @Entity
 public class Book_ost_hdr extends Abstract_entity {

@@ -5,6 +5,7 @@
 	  xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
+	<p:importConstants type="taskhub.persistence.constant.FormCode" var="formCode"/>
 	<h:form>
 		<p:menubar>
 			 <p:menuitem ajax="false"
@@ -13,6 +14,24 @@
 			 	<i class="pi pi-home" 
 			 	   style="font-size: 1.3rem;"/>
 			 </p:menuitem>
+			 
+			 <p:submenu label="Processing">
+			 	 <p:menuitem value="Sales" action="#{menuBean._switch()}" process="@this" update=":content"> 
+			 	 	<f:setPropertyActionListener value="#{formCode.SALES}" target="#{menuBean.currentForm}"/>
+			 	 </p:menuitem>
+			 </p:submenu>
+			 
+			 <p:submenu label="Master Setup">
+			 	 <p:menuitem value="Customer" action="#{menuBean._switch()}" process="@this" update=":content"> 
+			 	 	<f:setPropertyActionListener value="#{formCode.CUSTOMER}" target="#{menuBean.currentForm}"/>
+			 	 </p:menuitem>
+			 </p:submenu>
+			 
+			  <p:submenu label="Demo">
+			  	 <p:menuitem value="Book Management" action="#{menuBean._switch()}" process="@this" update=":content"> 
+			 	 	<f:setPropertyActionListener value="#{formCode.BOOK_MANAGEMENT}" target="#{menuBean.currentForm}"/>
+			 	 </p:menuitem>
+			 </p:submenu>
 			
 			
 		 	<f:facet name="options">
