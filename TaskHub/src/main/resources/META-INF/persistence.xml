@@ -5,11 +5,25 @@
 	<jta-data-source>java:/MAIN</jta-data-source>
 	
 	<class>taskhub.persistence.entity.Abstract_entity</class>
-	<class>taskhub.persistence.entity.Mt_user</class>
-	<class>taskhub.persistence.entity.Mt_document_numbering_scheme</class>
-	<class>taskhub.persistence.entity.Mt_employee</class>
-	<class>taskhub.persistence.entity.Book_new_hdr</class>
-	<class>taskhub.persistence.entity.Book_ost_hdr</class>
+	<class>taskhub.persistence.entity._Pk</class>
+	<class>taskhub.persistence.entity.mt.Mt_user</class>
+	<class>taskhub.persistence.entity.mt.Mt_user$Pk</class>
+	<class>taskhub.persistence.entity.mt.Mt_document_numbering_scheme</class>
+	<class>taskhub.persistence.entity.mt.Mt_document_numbering_scheme$Pk</class>
+	<class>taskhub.persistence.entity.mt.Mt_employee</class>
+	<class>taskhub.persistence.entity.mt.Mt_employee$Pk</class>
+	<class>taskhub.persistence.entity.bo.Book_new_hdr</class>
+	<class>taskhub.persistence.entity.bo.Book_new_hdr$Pk</class>
+	<class>taskhub.persistence.entity.bo.Book_ost_hdr</class>
+	<class>taskhub.persistence.entity.bo.Book_ost_hdr$Pk</class>
+	<class>taskhub.persistence.entity.sa.Sa_order_new_hdr</class>
+	<class>taskhub.persistence.entity.sa.Sa_order_new_hdr$Pk</class>
+	<class>taskhub.persistence.entity.sa.Sa_order_new_det</class>
+	<class>taskhub.persistence.entity.sa.Sa_order_new_det$Pk</class>
+	<class>taskhub.persistence.entity.sa.Sa_order_ost_hdr</class>
+	<class>taskhub.persistence.entity.sa.Sa_order_ost_hdr$Pk</class>
+	<class>taskhub.persistence.entity.sa.Sa_order_ost_det</class>
+	<class>taskhub.persistence.entity.sa.Sa_order_ost_det$Pk</class>
 	<exclude-unlisted-classes>true</exclude-unlisted-classes>
 	
 	<properties>
@@ -18,6 +32,7 @@
         <property name="hibernate.hbm2ddl.auto" value="update"/>
 		<property name="jboss.as.jpa.managed" value="false" />
 		<property name="hibernate.show_sql" value="true"/>
+		<property name="hibernate.create_empty_composites.enabled" value="true"/>
 	</properties>
 	
 	</persistence-unit>

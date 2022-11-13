@@ -1,4 +1,4 @@
-package taskhub.action.uibean;
+package taskhub.action.uibean.bo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +10,11 @@ import javax.inject.Named;
 
 import org.primefaces.event.FileUploadEvent;
 
-import taskhub.action.service.BookService;
+import taskhub.action.service.bo.BookService;
+import taskhub.action.uibean.AbstractBean;
 import taskhub.persistence.constant.BookCategory;
-import taskhub.persistence.entity.Book_new_hdr;
-import taskhub.persistence.entity.Book_ost_hdr;
+import taskhub.persistence.entity.bo.Book_new_hdr;
+import taskhub.persistence.entity.bo.Book_ost_hdr;
 
 @SuppressWarnings("serial")
 @Named

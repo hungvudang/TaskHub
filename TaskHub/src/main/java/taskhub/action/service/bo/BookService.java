@@ -1,4 +1,4 @@
-package taskhub.action.service;
+package taskhub.action.service.bo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +11,13 @@ import javax.inject.Named;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import taskhub.action.service.AbstractService;
+import taskhub.action.service.helper.DnsHelper;
 import taskhub.persistence.QueryHelper;
-import taskhub.persistence.entity.Book_new_hdr;
-import taskhub.persistence.entity.Book_new_hdr_;
-import taskhub.persistence.entity.Book_ost_hdr;
-import taskhub.persistence.entity.Book_ost_hdr_;
+import taskhub.persistence.entity.bo.Book_new_hdr;
+import taskhub.persistence.entity.bo.Book_new_hdr_;
+import taskhub.persistence.entity.bo.Book_ost_hdr;
+import taskhub.persistence.entity.bo.Book_ost_hdr_;
 import taskhub.util.BeanCopper;
 
 @SuppressWarnings("serial")
@@ -36,7 +38,7 @@ public class BookService extends AbstractService {
 	public void delete(final Book_new_hdr book_new_hdr) {
 		this.em.remove(book_new_hdr);
 		
-		final Book_ost_hdr book_ost_hdr = this.em.find(Book_ost_hdr.class, book_new_hdr.getBook_code());
+		Book_ost_hdr book_ost_hdr = this.em.find(Book_ost_hdr.class, new taskhub.persistence.entity.bo.Book_ost_hdr.Pk(book_new_hdr.getBook_code()));
 		if (book_ost_hdr != null) {
 			book_ost_hdr.setVariation(false);
 		}
@@ -48,7 +50,7 @@ public class BookService extends AbstractService {
 		boolean successfully = false;
 		if (valid) {
 			try {
-				Book_ost_hdr book_ost_hdr = this.em.find(Book_ost_hdr.class, book_new_hdr.getBook_code());
+				Book_ost_hdr book_ost_hdr = this.em.find(Book_ost_hdr.class, new taskhub.persistence.entity.bo.Book_ost_hdr.Pk(book_new_hdr.getBook_code()));
 				// Variation case
 				if (book_ost_hdr == null) {
 					book_ost_hdr = new Book_ost_hdr(book_new_hdr.getBook_code());
@@ -83,7 +85,8 @@ public class BookService extends AbstractService {
 	
 	public List<Book_new_hdr> findAll_Book_new_hdr() {
 		final QueryHelper<Book_new_hdr, Book_new_hdr> queryHelper = QueryHelper.create(Book_new_hdr.class);
-		queryHelper.query.orderBy(queryHelper.cb.desc(queryHelper.root.get(Book_new_hdr_.book_code)));
+		queryHelper.query.orderBy(
+				queryHelper.cb.desc(queryHelper.root.get(Book_new_hdr_.book_code)));
 		return this.em.createQuery(queryHelper.query).getResultList();
 	}
 	

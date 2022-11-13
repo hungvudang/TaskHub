@@ -1,9 +1,10 @@
-package taskhub.action.service;
+package taskhub.action.uibean.menu;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import taskhub.action.service.form.FormSwitcher;
 import taskhub.persistence.constant.FormCode;
 
 @Named

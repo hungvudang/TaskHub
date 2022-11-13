@@ -1,5 +1,6 @@
 package taskhub.persistence.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,13 +12,18 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.Size;
 
-@MappedSuperclass
-public abstract class Abstract_entity {
+import taskhub.util.NoCopy;
 
+
+@SuppressWarnings("serial")
+@MappedSuperclass
+public abstract class Abstract_entity implements Serializable{
+	
 	@Column(length = 50)
 	@Size(max = 50)
 	private String created_by;
 	
+	@NoCopy
 	@Column
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date created_datetime;
@@ -26,14 +32,16 @@ public abstract class Abstract_entity {
 	@Size(max = 50)
 	private String last_updated_by;
 	
-	
+	@NoCopy
 	@Column
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date last_updated_datetime;
 	
 	@Version
 	private Integer object_version;
-
+	
+	public abstract _Pk getPk();
+	
 	public String getCreated_by() {
 		return created_by;
 	}
@@ -76,4 +84,5 @@ public abstract class Abstract_entity {
 	protected void preUpdate() {
 		this.setLast_updated_datetime(new Date());
 	}
+	
 }

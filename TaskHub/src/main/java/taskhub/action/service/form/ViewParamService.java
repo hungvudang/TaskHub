@@ -1,4 +1,4 @@
-package taskhub.action.service;
+package taskhub.action.service.form;
 
 import java.util.Arrays;
 
@@ -7,6 +7,7 @@ import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 
+import taskhub.action.service.AbstractService;
 import taskhub.persistence.constant.FormCode;
 
 @SuppressWarnings("serial")

@@ -1,4 +1,4 @@
-package taskhub.action.service;
+package taskhub.action.service.helper;
 
 import java.util.Objects;
 
@@ -10,11 +10,13 @@ import javax.inject.Named;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 
+import taskhub.action.service.AbstractService;
+import taskhub.action.service.form.FormSwitcher;
 import taskhub.cdi.helper.ConversationHelper;
 import taskhub.persistence.QueryHelper;
 import taskhub.persistence.entity.LoginModel;
-import taskhub.persistence.entity.Mt_user;
-import taskhub.persistence.entity.Mt_user_;
+import taskhub.persistence.entity.mt.Mt_user;
+import taskhub.persistence.entity.mt.Mt_user_;
 
 @SuppressWarnings("serial")
 @Named

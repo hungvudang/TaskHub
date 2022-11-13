@@ -1,4 +1,4 @@
-package taskhub.action.uibean;
+package taskhub.action.uibean.mt;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,8 +15,9 @@ import javax.inject.Named;
 
 import org.apache.commons.lang3.time.DateUtils;
 
-import taskhub.action.service.EmployeeService;
-import taskhub.persistence.entity.Mt_employee;
+import taskhub.action.service.mt.EmployeeService;
+import taskhub.action.uibean.AbstractBean;
+import taskhub.persistence.entity.mt.Mt_employee;
 
 @Named
 @SessionScoped

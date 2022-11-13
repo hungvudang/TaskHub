@@ -1,12 +1,14 @@
-package taskhub.action.service;
+package taskhub.action.service.mt;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import taskhub.action.service.AbstractService;
+import taskhub.action.service.helper.DnsHelper;
 import taskhub.persistence.QueryHelper;
-import taskhub.persistence.entity.Mt_employee;
-import taskhub.persistence.entity.Mt_employee_;
+import taskhub.persistence.entity.mt.Mt_employee;
+import taskhub.persistence.entity.mt.Mt_employee_;
 
 @SuppressWarnings("serial")
 public class EmployeeService extends AbstractService {
@@ -32,7 +34,8 @@ public class EmployeeService extends AbstractService {
 
 	public List<Mt_employee> findAll() {
 		final QueryHelper<Mt_employee, Mt_employee> queryHelper = QueryHelper.create(Mt_employee.class);
-		queryHelper.query.orderBy(queryHelper.cb.asc(queryHelper.root.get(Mt_employee_.id)));
+		queryHelper.query.orderBy(queryHelper.cb.asc(
+				queryHelper.root.get(Mt_employee_.pk).get(taskhub.persistence.entity.mt.Mt_employee_.Pk_.id)));
 		return this.em.createQuery(queryHelper.query).getResultList();
 	}
 }

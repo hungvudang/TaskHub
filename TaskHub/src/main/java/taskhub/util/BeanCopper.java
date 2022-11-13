@@ -3,13 +3,17 @@ package taskhub.util;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import taskhub.persistence.entity.Abstract_entity;
@@ -27,9 +31,11 @@ public class BeanCopper {
 			final Field[] origfields = origClass.getDeclaredFields();
 
 			for (final Field origField : origfields) {
+				
 				if (origField.getDeclaredAnnotation(Column.class) != null //
-						&& origField.getDeclaredAnnotation(Version.class) == null//
-						&& origField.getDeclaredAnnotation(Id.class) == null) {
+						&& !CollectionUtils.containsAny(//
+								Arrays.asList(Id.class, EmbeddedId.class, Version.class, OneToMany.class, NoCopy.class), //
+								Arrays.asList(origField.getDeclaredAnnotations()))) {
 					try {
 						
 						final Method getterOrig = origClass

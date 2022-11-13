@@ -1,4 +1,4 @@
-package taskhub.action.service;
+package taskhub.action.service.helper;
 
 import java.io.Serializable;
 
@@ -10,7 +10,8 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.StringUtils;
 
 import taskhub.cdi.EmLocator;
-import taskhub.persistence.entity.Mt_document_numbering_scheme;
+import taskhub.persistence.entity.mt.Mt_document_numbering_scheme;
+import taskhub.persistence.entity.mt.Mt_document_numbering_scheme.Pk;
 
 @SuppressWarnings("serial")
 @Named
@@ -19,7 +20,7 @@ public class DnsHelper implements Serializable {
 	
 	public String next(@NotNull final String numbering_scheme_key) {
 		if (!!!StringUtils.isBlank(numbering_scheme_key)) {
-			final Mt_document_numbering_scheme dns = EmLocator.getEm().find(Mt_document_numbering_scheme.class, numbering_scheme_key, LockModeType.PESSIMISTIC_WRITE);
+			final Mt_document_numbering_scheme dns = EmLocator.getEm().find(Mt_document_numbering_scheme.class, new Pk(numbering_scheme_key), LockModeType.PESSIMISTIC_WRITE);
 			if (dns != null) {
 				dns.setLast_no(dns.getLast_no() + 1);
 				return dns.next();

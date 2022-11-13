@@ -1,25 +1,30 @@
-package taskhub.persistence.entity;
+package taskhub.persistence.entity.bo;
 
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 import taskhub.persistence.constant.BookCategory;
+import taskhub.persistence.entity.Abstract_entity;
+import taskhub.persistence.entity._Pk;
 
+@SuppressWarnings("serial")
 @Entity
 public class Book_ost_hdr extends Abstract_entity {
 
-	@Id
-	@Column(insertable = false, updatable = false, length = 50)
-	@Size(max = 50)
+	@EmbeddedId
+	private Pk pk;
+	
+	@Column(updatable = false, insertable = false)
 	private String book_code;
 
 	@Column(length = 255)
@@ -56,15 +61,12 @@ public class Book_ost_hdr extends Abstract_entity {
 	}
 
 	public Book_ost_hdr(@Size(max = 50) String book_code) {
+		this.pk = new Pk(book_code);
 		this.book_code = book_code;
 	}
 
 	public String getBook_code() {
-		return this.book_code;
-	}
-
-	protected void setBook_code(String book_code) {
-		this.book_code = book_code;
+		return this.pk.getBook_code();
 	}
 
 	public String getTitle() {
@@ -129,6 +131,56 @@ public class Book_ost_hdr extends Abstract_entity {
 
 	public void setBook_category(BookCategory book_category) {
 		this.book_category = book_category;
+	}
+	
+	@Override
+	public _Pk getPk() {
+		return this.pk;
+	}
+	
+	@Embeddable
+	public static class Pk extends _Pk {
+		@Column(insertable = false, updatable = false, length = 50)
+		@Size(max = 50)
+		private String book_code;
+		
+		public Pk() {
+		}
+		
+		public Pk(@Size(max = 50) String book_code) {
+			super();
+			this.book_code = book_code;
+		}
+
+		public String getBook_code() {
+			return this.book_code;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((this.book_code == null) ? 0 : this.book_code.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Pk other = (Pk) obj;
+			if (this.book_code == null) {
+				if (other.book_code != null)
+					return false;
+			} else if (!this.book_code.equals(other.book_code))
+				return false;
+			return true;
+		}
+		
 	}
 	
 
