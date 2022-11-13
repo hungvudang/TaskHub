@@ -1,0 +1,82 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<div style="overflow: auto; height: 150px;" > 
+		<p:panelGrid columns="4" styleClass="ui-noborder full-width">
+            
+            <!-- CUSTOMER NAME -->
+            <p:outputLabel value="Customer Name" styleClass="mandatory form-label"/>
+            <ui:fragment rendered="#{not readonly}"> 
+				<p:inputText value="#{order.customer_name}">
+					<p:ajax update="@this" process="@this"/>
+				</p:inputText>
+            </ui:fragment>
+            <ui:fragment rendered="#{readonly}">
+            	<p:outputLabel value="#{order.customer_name}"/> 
+            </ui:fragment>
+            
+			<!-- ORDER DATE -->
+			<p:outputLabel value="Order Date" styleClass="mandatory form-label"/>
+			<ui:fragment rendered="#{not readonly}">
+				<p:datePicker value="#{order.order_date}" pattern="dd/MM/yyyy" >
+					<p:ajax update="@this" process="@this"/>
+				</p:datePicker>
+			</ui:fragment>
+			<ui:fragment rendered="#{readonly}">
+				<p:outputLabel value="#{order.order_date}">
+					<f:convertDateTime pattern="dd/MM/yyyy"/>
+				</p:outputLabel>
+			</ui:fragment>
+			
+			<!-- CUSTOMER ADDRESS -->
+			<p:outputLabel value="Customer Address" styleClass="mandatory form-label"/>
+			<ui:fragment rendered="#{not readonly}"> 
+				<p:inputTextarea value="#{order.customer_address}" >
+					<p:ajax update="@this" process="@this"/>
+				</p:inputTextarea>
+		    </ui:fragment>
+	        <ui:fragment rendered="#{readonly}"> 
+	     	 	<p:outputLabel value="#{order.customer_address}"/>
+	        </ui:fragment>
+			 
+			<!-- REF NO. -->   
+			<p:outputLabel value="Ref No." styleClass="form-label"/>
+			<ui:fragment rendered="#{not readonly}"> 
+				<p:inputText value="#{order.ref_no}" >
+					<p:ajax update="@this" process="@this"/>
+				</p:inputText>
+		    </ui:fragment>
+		    <ui:fragment rendered="#{readonly}"> 
+		    	<p:outputLabel value="#{order.ref_no}"/>
+		    </ui:fragment>
+		    
+			<!-- CONTACT NO -->
+			<p:outputLabel value="Contact No." styleClass="form-label"/>
+			<ui:fragment rendered="#{not readonly}"> 
+				<p:inputText value="#{order.customer_contact_no}">
+					<p:ajax update="@this" process="@this"/>
+				</p:inputText>
+		    </ui:fragment>
+		    <ui:fragment rendered="#{readonly}">
+		    	<p:outputLabel value="#{order.customer_contact_no}"/>
+		    </ui:fragment>
+		    
+			<!-- SUBJECT -->   
+			<p:outputLabel value="Subject" styleClass="form-label"/>
+			<ui:fragment rendered="#{not readonly}"> 
+				<p:inputTextarea value="#{order.subject}">
+					<p:ajax update="@this" process="@this"/>
+				</p:inputTextarea> 
+		    </ui:fragment>
+		    <ui:fragment rendered="#{readonly}"> 
+		    	<p:outputLabel value="#{order.subject}"/>
+		    </ui:fragment>
+			
+	    </p:panelGrid>
+	</div>
+</ui:composition>
+</html>

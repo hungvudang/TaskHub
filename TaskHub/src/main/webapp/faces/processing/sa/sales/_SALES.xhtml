@@ -1,14 +1,31 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	  xmlns:h="http://xmlns.jcp.org/jsf/html"
-	  xmlns:f="http://xmlns.jcp.org/jsf/core">
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
+	<ui:param name="new" value="#{salesBean.current_Sa_order_new_hdr ne null}" />
+	<ui:param name="ost" value="#{salesBean.current_Sa_order_ost_hdr ne null}" />
+	
+	<ui:param name="vch_no" 
+			  value="#{new ? 
+			  			salesBean.current_Sa_order_new_hdr.sales_order_no : ost ? 
+			  													salesBean.current_Sa_order_ost_hdr.sales_order_no : ''}" />
+	
 	<div align="center">
-			<h3>Wellcome to Sales</h3>
+		<h3 style="margin: 5px 0">Sales Order #{not empty vch_no ? '- [ '.concat(vch_no).concat(' ]') : ''}</h3>
 	</div>
+	
+	<ui:fragment rendered="#{salesBean.current_Sa_order_new_hdr eq null and salesBean.current_Sa_order_ost_hdr eq null}">
+		<p:tabView cache="true"
+				   dynamic="true">
+			<ui:include src="summary/summary_master.xhtml" />
+		</p:tabView>
+	</ui:fragment>
+	
+	<ui:fragment rendered="#{salesBean.current_Sa_order_new_hdr ne null or salesBean.current_Sa_order_ost_hdr ne null}">
+		<ui:include src="details/detail_master.xhtml" />
+	</ui:fragment>
 </ui:composition>
 </html>

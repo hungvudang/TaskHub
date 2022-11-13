@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:form>
+		<p:commandButton icon="pi pi-angle-left"
+						 value="Back to Summary"
+						 process="@this"
+						 update=":content"
+						 action="#{salesBean.switchToSummary()}"
+						 style="margin: .2em .5em 0 .8em"
+						 styleClass="ui-button ui-button-outlined"/>
+						 
+		<p:commandButton value="Revise"
+						 icon="pi pi-pencil"
+						 process="@this"
+						 update=":content"
+						 disabled="#{salesBean.current_Sa_order_ost_hdr.variation}"
+						 action="#{salesBean.revise()}"
+						 style="margin: .2em .5em 0 .8em"
+						 styleClass="ui-button ui-button-outlined"/>
+		
+		<p:separator/>				 
+		<div align="center">
+			<p:outputPanel layout="block" style="display: flex;
+												 flex-direction: column;
+												 justify-content: center;
+										         width: 100%;">
+										         
+				<p:outputPanel layout="block">
+					<ui:include src="header.xhtml">
+						<ui:param name="order" value="#{salesBean.current_Sa_order_ost_hdr}" />
+						<ui:param name="readonly" value="true" />
+					</ui:include>
+					<p:separator/>
+				</p:outputPanel>
+				
+				<p:outputPanel layout="block">
+					<h:form>
+						<p:dataTable value="#{salesBean.current_Sa_order_ost_hdr.sa_order_ost_dets}"
+									 var="det"
+									 rows="4"
+									 styleClass="pfs-detail-datatable"
+									 paginator="true"
+									 rowIndexVar="index"
+									 paginatorAlwaysVisible="true"
+									 stickyHeader="true"
+									 paginatorPosition="bottom">
+							
+							<p:column headerText="No." styleClass="align-center column-sequence-no">
+								<p:outputLabel value="#{index + 1}"/>
+							</p:column>
+							
+							<p:column headerText="Item Type" styleClass="align-center">
+								<p:outputLabel value="#{det.item_type}"/>
+							</p:column>
+							
+							<p:column headerText="Item Code" styleClass="align-center">
+								<ui:fragment rendered="#{ItemType.I eq det.item_type}">
+									<p:outputLabel value="#{det.inventory_code.desc}"/>
+								</ui:fragment>
+								
+								<ui:fragment rendered="#{ItemType.S eq det.item_type}">
+									<p:outputLabel value="#{det.service_code.desc}"/>
+								</ui:fragment>
+							</p:column>
+							
+							<p:column headerText="Item Remark">
+								<p:outputLabel value="#{det.item_remark}"/>
+							</p:column>
+							
+							<p:column headerText="Qty" styleClass="align-right">
+								<p:outputLabel value="#{det.qty}"/>
+							</p:column>
+							
+							<p:column headerText="UOM" styleClass="align-center">
+								<p:outputLabel value="#{det.uom_code.label}"/>
+							</p:column>
+							
+							<p:column headerText="Price" styleClass="align-right">
+								<p:outputLabel value="#{det.gross_price}"/>
+							</p:column>
+							
+							<p:column headerText="Amt" styleClass="align-right">
+								<p:outputLabel value="#{det.base_extended_amt}"/>
+							</p:column>
+						</p:dataTable>
+					</h:form>
+				</p:outputPanel>
+			</p:outputPanel>
+		</div>				 
+	</h:form>
+</ui:composition>
+</html>

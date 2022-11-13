@@ -11,6 +11,7 @@ import javax.inject.Named;
 import org.primefaces.event.FileUploadEvent;
 
 import taskhub.action.service.bo.BookService;
+import taskhub.action.service.helper.AuthServiceHelper;
 import taskhub.action.uibean.AbstractBean;
 import taskhub.persistence.constant.BookCategory;
 import taskhub.persistence.entity.bo.Book_new_hdr;
@@ -20,9 +21,13 @@ import taskhub.persistence.entity.bo.Book_ost_hdr;
 @Named
 @ConversationScoped
 public class BookBean extends AbstractBean {
+	
 	private static final String MODULE_CODE = "BO";
 	@Inject
 	private BookService service;
+	
+	@Inject
+	private AuthServiceHelper authServiceHelper;
 	
 	private Book_new_hdr current_book_new;
 	private Book_ost_hdr current_book_ost;
@@ -30,7 +35,9 @@ public class BookBean extends AbstractBean {
 	private List<Book_new_hdr> book_new_hdrs;
 	private List<Book_ost_hdr> book_ost_hdrs;
 	
-	
+	public boolean isGuest() {
+		return authServiceHelper.isGuest();
+	}
 	public void create() {
 		final Book_new_hdr book_new_hdr = this.service.create(MODULE_CODE);
 		this.current_book_new = book_new_hdr;
@@ -70,8 +77,7 @@ public class BookBean extends AbstractBean {
 	
 	public List<SelectItem> getBookCategorySelectItem() {
 		List<SelectItem> selectItems = new ArrayList<SelectItem>();
-		selectItems.add(new SelectItem(null, "Please Select ..."));
-		
+		selectItems.add(new SelectItem(null, "Please Select"));
 		for (final BookCategory c :  BookCategory.values() ) {
 			selectItems.add(new SelectItem(c, c.getLabel()));
 		}
@@ -107,7 +113,7 @@ public class BookBean extends AbstractBean {
 		if (this.book_new_hdrs == null) {
 			this.book_new_hdrs = this.service.findAll_Book_new_hdr();
 		}
-		return this.book_new_hdrs;
+		return this.book_new_hdrs;	
 	}
 	public void setBook_new_hdrs(List<Book_new_hdr> book_new_hdrs) {
 		this.book_new_hdrs = book_new_hdrs;
@@ -123,5 +129,4 @@ public class BookBean extends AbstractBean {
 	public void setBook_ost_hdrs(List<Book_ost_hdr> book_ost_hdrs) {
 		this.book_ost_hdrs = book_ost_hdrs;
 	}
-	
 }

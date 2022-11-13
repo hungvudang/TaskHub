@@ -55,4 +55,35 @@ body .ui-datatable thead th {
 	text-align: center;
 }
 
+.align-center {
+	text-align: center !important;
+}
+
+.align-right {
+	text-align: right !important;
+}
+
+.align-left {
+	text-align: left !important;
+}
+
+body .ui-datatable .ui-datatable-header {
+	padding: 5px;
+	background-color: transparent;
+}
+
+body .ui-inputfield {
+	width: 100% !important;
+}
+
+
+.pfs-detail-datatable .ui-datatable-tablewrapper {
+  overflow: auto;
+  height: 12em;
+}
+
+.column-sequence-no {
+	width: 20px !important;
+}
+
 

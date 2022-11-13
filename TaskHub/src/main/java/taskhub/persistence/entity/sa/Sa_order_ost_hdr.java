@@ -1,5 +1,7 @@
 package taskhub.persistence.entity.sa;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -9,6 +11,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 import taskhub.persistence.entity.Abstract_entity;
@@ -24,6 +28,40 @@ public class Sa_order_ost_hdr extends Abstract_entity {
 	@Column(updatable = false, insertable = false)
 	private String sales_order_no;
 	
+	@Column(length = 50)
+	@Size(max = 50)
+	private String customer_code;
+	
+	@Column(length = 255)
+	@Size(max = 255)
+	private String customer_name;
+	
+	@Column(length = 2000)
+	@Size(max = 2000)
+	private String customer_address;
+	
+	@Column
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date order_date;
+	
+	@Column(length = 255)
+	@Size(max = 255)
+	private String customer_contact_no;
+	
+	@Column(length = 255)
+	@Size(max = 255)
+	private String ref_no;
+	
+	@Column(length = 2000)
+	@Size(max = 2000)
+	private String subject;
+	
+	@Column
+	private double total_amt;
+	
+	@Column
+	private boolean variation;
+	
 	protected Sa_order_ost_hdr() {
 		
 	}
@@ -33,12 +71,90 @@ public class Sa_order_ost_hdr extends Abstract_entity {
 		this.sales_order_no = sales_order_no;
 	}
 	
-	public String getSa_order_no() {
+	public String getSales_order_no() {
 		return this.pk.getSales_order_no();
 	}
 	
+	
+	public String getCustomer_code() {
+		return this.customer_code;
+	}
+
+	public void setCustomer_code(String customer_code) {
+		this.customer_code = customer_code;
+	}
+
+	public String getCustomer_name() {
+		return this.customer_name;
+	}
+
+	public void setCustomer_name(String customer_name) {
+		this.customer_name = customer_name;
+	}
+
+	public String getCustomer_address() {
+		return this.customer_address;
+	}
+
+	public void setCustomer_address(String customer_address) {
+		this.customer_address = customer_address;
+	}
+
+	public String getCustomer_contact_no() {
+		return this.customer_contact_no;
+	}
+
+	public void setCustomer_contact_no(String customer_contact_no) {
+		this.customer_contact_no = customer_contact_no;
+	}
+
+	public String getRef_no() {
+		return this.ref_no;
+	}
+
+	public void setRef_no(String ref_no) {
+		this.ref_no = ref_no;
+	}
+
+	public String getSubject() {
+		return this.subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+	
+
+	public Date getOrder_date() {
+		return this.order_date;
+	}
+
+	public void setOrder_date(Date order_date) {
+		this.order_date = order_date;
+	}
+
+	public double getTotal_amt() {
+		return this.total_amt;
+	}
+
+	public void setTotal_amt(double total_amt) {
+		this.total_amt = total_amt;
+	}
+
+	public boolean isVariation() {
+		return this.variation;
+	}
+
+	public void setVariation(boolean variation) {
+		this.variation = variation;
+	}
+
+
+
+
+
 	@OneToMany(mappedBy = "sa_order_ost_hdr", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
-	private List<Sa_order_ost_det> sa_order_ost_dets;
+	private List<Sa_order_ost_det> sa_order_ost_dets = new ArrayList<Sa_order_ost_det>();
 	
 	public List<Sa_order_ost_det> getSa_order_ost_dets() {
 		return this.sa_order_ost_dets;

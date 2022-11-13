@@ -36,24 +36,21 @@ public class AuthServiceHelper extends AbstractService {
 	public boolean isLoggedIn() {
 		return !Objects.isNull(LOCAL_CONTEXT.get());
 	}
+	
+	public Mt_user getCurrentUser() {
+		return AuthServiceHelper.LOCAL_CONTEXT.get();
+	}
 
 	public void login() {
 		if (this.model != null) {
 			if (this.authenticate()) {
 				this.formSwitcher.home();
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfuly", ""));
 			} else {
 				AuthServiceHelper.LOCAL_CONTEXT.set(null);
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 						"Faild", "You have entered invalid username or password. Please try again."));
 			}
 		}
-	}
-
-	public void logout() {
-
-		ConversationHelper.endIfNotTransient();
 	}
 
 	public void loginAsGuest() {
@@ -80,6 +77,7 @@ public class AuthServiceHelper extends AbstractService {
 	}
 
 	public void clear() {
+		this.guest = false;
 		AuthServiceHelper.LOCAL_CONTEXT.set(null);
 	}
 

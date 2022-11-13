@@ -6,52 +6,58 @@
 
 <ui:composition>
 	<p:importConstants type="taskhub.persistence.constant.FormCode" var="formCode"/>
+	<ui:param name="loggedIn" value="#{authServiceHelper.loggedIn}" />
 	<h:form>
 		<p:menubar>
 			 <p:menuitem process="@this"
 			 			 update=":content"
-			 			 immediate="true"
-			 			 action="#{formSwitcher.home()}"
-			 			 ignoreAutoUpdate="true">
+			 			 action="#{formSwitcher.home()}">
 			 	<i class="pi pi-home" 
 			 	   style="font-size: 1.3rem;"/>
 			 </p:menuitem>
 			 
-			 <p:submenu label="Processing">
-			 	 <p:menuitem value="Sales" action="#{menuBean._switch()}" process="@this" update=":content" immediate="true" ignoreAutoUpdate="true"> 
-			 	 	<f:setPropertyActionListener value="#{formCode.SALES}" target="#{menuBean.currentForm}"/>
-			 	 </p:menuitem>
-			 </p:submenu>
-			 
-			 <p:submenu label="Master Setup">
-			 	 <p:menuitem value="Customer" action="#{menuBean._switch()}" process="@this" update=":content" immediate="true" ignoreAutoUpdate="true"> 
-			 	 	<f:setPropertyActionListener value="#{formCode.CUSTOMER}" target="#{menuBean.currentForm}"/>
-			 	 </p:menuitem>
-			 </p:submenu>
+				 <p:submenu label="Processing" rendered="#{loggedIn}">
+				 	 <p:menuitem value="Sales" action="#{formSwitcher._switch(formCode.SALES)}" process="@this" update=":content"> 
+				 	 </p:menuitem>
+				 </p:submenu>
+				 
+				 <p:submenu label="Master Setup" rendered="#{loggedIn}">
+				 	 <p:menuitem value="Customer" action="#{formSwitcher._switch(formCode.CUSTOMER)}" process="@this" update=":content"> 
+				 	 </p:menuitem>
+				 </p:submenu>
 			 
 			  <p:submenu label="Demo">
-			  	 <p:menuitem value="Book Management" action="#{menuBean._switch()}" process="@this" update=":content" immediate="true" ignoreAutoUpdate="true"> 
-			 	 	<f:setPropertyActionListener value="#{formCode.BOOK_MANAGEMENT}" target="#{menuBean.currentForm}"/>
+			  	 <p:menuitem value="Book Management" action="#{formSwitcher._switch(formCode.BOOK_MANAGEMENT)}" process="@this" update=":content"> 
 			 	 </p:menuitem>
 			 </p:submenu>
 			
-			
 		 	<f:facet name="options">
-		 		<ui:fragment rendered="#{not authServiceHelper.loggedIn}">
+		 		<ui:fragment rendered="#{not loggedIn}">
 		 			<p:commandButton value="Login"
-		 							 action="#{formSwitcher.switchToLogin()}"
+		 							 action="#{formSwitcher.switchLogInView()}"
 		 							 process="@this"
 		 							 icon="pi pi-sign-in"
 		 							 ajax="false"
-		 							 immediate="true"
-		 							 ignoreAutoUpdate="true"
 		 							 styleClass="ui-button-raised ui-button-secondary ui-button-flat" />
 		 		</ui:fragment>
 		 		
-		 		<ui:fragment rendered="#{authServiceHelper.loggedIn}">
-	               <p:commandButton type="button" 
-		 							value="Logout"
-		 							styleClass="ui-button-raised ui-button-secondary ui-button-flat" />
+		 		<ui:fragment rendered="#{loggedIn}">
+		 			<ui:param name="alias" value="#{authServiceHelper.currentUser.alias}" />
+		 			
+		 		   	<p:commandLink title="#{alias}"
+		 		   				   process="@this"
+		 		   				   update="@this"
+		 		   				   ajax="false"
+		 		   				   action="#{formSwitcher.switchLogInView()}">
+		 		   				   
+			 		   <p:avatar icon="pi pi-user"
+			 		   			 label="#{alias}"
+			 		   			 shape="circle"
+			 		   			 style="top: 5px;"
+			 		   			 styleClass="mr-2"/>
+			 		   			 
+			 		   <p:confirm header="Confirm" message="Do you want to logout ?"/>
+		 		   	</p:commandLink>
 		 		</ui:fragment>
             </f:facet>
 		</p:menubar>

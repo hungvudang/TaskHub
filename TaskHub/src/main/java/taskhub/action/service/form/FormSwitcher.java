@@ -1,50 +1,59 @@
 package taskhub.action.service.form;
 
-import javax.enterprise.context.ApplicationScoped;
+import java.io.Serializable;
+import java.util.Arrays;
+
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import taskhub.action.service.AbstractService;
+import org.apache.commons.lang3.StringUtils;
+
 import taskhub.action.service.helper.AuthServiceHelper;
 import taskhub.cdi.helper.ConversationHelper;
 import taskhub.persistence.constant.FormCode;
+import taskhub.persistence.entity.FormInfo;
 
 @SuppressWarnings("serial")
 @Named
-@ApplicationScoped
-public class FormSwitcher extends AbstractService {
-	// private static final String HOME = "HOME";
-	
+@RequestScoped
+public class FormSwitcher implements Serializable {
+
 	@Inject
 	private AuthServiceHelper authServiceHelper;
-	
+
 	@Inject
-	private ViewParamService viewParamService;
+	private ViewParamHolder viewParamHolder;
 	
+	public String locateSrcForm() {
+		final FormInfo formInfo = this.viewParamHolder.getFormInfo();
+		if (formInfo != null && formInfo.getFormCode() != null) {
+			final FormCode form = formInfo.getFormCode();
+			return "/" + StringUtils.join(Arrays.asList("faces", form.getContext(), form.getModule_code(),
+											form.getForm_code(), "_" + form.name() + ".xhtml"), "/");
+		}
+		return null;
+	}
+
 	public void home() {
-		viewParamService.resetInfo();
-		if (!authServiceHelper.isLoggedIn()) {
-			this.switchToLogin();
+		this.viewParamHolder.resetFormInfo();
+		if (!this.authServiceHelper.isLoggedIn()) {
+			this.switchLogInView();
 		} else {
 			ConversationHelper.beginIfTransient();
 		}
 	}
 
-	public void switchToLogin() {
-		authServiceHelper.setGuest(false);
-		authServiceHelper.clear();
-		viewParamService.resetInfo();
+	public void switchLogInView() {
+		this.viewParamHolder.resetInfo();
+		this.authServiceHelper.clear();
 		ConversationHelper.endIfNotTransient();
 	}
-	
-	public void switchToFormCode(final FormCode formCode) {
-		viewParamService.resetInfo();
-		ConversationHelper.endIfNotTransient();
-		if (formCode != null) {
-			this.viewParamService.setActiveFormCode(formCode);
-			ConversationHelper.beginIfTransient(); 
-		}
-		
-		
+
+	public void _switch(final FormCode formCode) {
+		final FormInfo formInfo = new FormInfo(formCode);
+		this.viewParamHolder.setFormInfo(formInfo);
+		ConversationHelper.beginIfTransient();
 	}
+
 }

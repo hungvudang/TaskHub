@@ -18,8 +18,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import taskhub.persistence.entity.Abstract_entity;
 
-public class BeanCopper {
-	private static final Logger LOG = Logger.getLogger(BeanCopper.class.getName());
+public class BeanCoppier {
+	private static final Logger LOG = Logger.getLogger(BeanCoppier.class.getName());
 
 	public static <O extends Abstract_entity, D extends Abstract_entity> void copy(final O orig, final D dest) {
 		if (orig != null && dest != null) {

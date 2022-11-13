@@ -10,12 +10,12 @@
 <ui:composition>
 	<h:form>
 		<p:commandButton icon="pi pi-angle-left"
-						 title="Back to Summary"
+						 value="Back to Summary"
 						 process="@this"
 						 update=":content"
 						 action="#{bookBean.switchToSummary()}"
 						 style="margin: .2em .5em 0 .8em"
-						 styleClass="ui-button ui-button-flat"/>
+						 styleClass="ui-button ui-button-outlined"/>
 						 
 		<p:commandButton value="Submit"
 						 process="@this"
@@ -34,7 +34,7 @@
 						 styleClass="ui-button ui-button-outlined ui-button-danger">
 			<p:confirm header="Confirm" message="Are you sure ?"/>				 
 		</p:commandButton>
-		<div align="center">
+		<div align="center" style="margin-top: 5px;">
 			<p:outputPanel layout="block" style="display: flex;
 												 justify-content: space-between;
 										         width: 100%;">
@@ -49,7 +49,6 @@
 							
 							<p:column colspan="3">
 								<p:inputText value="#{bookBean.current_book_new.title}" 
-											 style="width: 100%"
 											 label="Title"
 											 required="true">
 									<p:ajax event="change" update="@this" process="@this"/>
@@ -65,7 +64,6 @@
 							
 							<p:column colspan="3">
 								<p:inputText value="#{bookBean.current_book_new.author}" 
-											 style="width: 100%"
 											 label="Author"
 											 required="true">
 									<p:ajax event="change" update="@this" process="@this"/>
@@ -80,7 +78,7 @@
 							</p:column>
 							
 							<p:column colspan="3">
-								<p:inputTextarea value="#{bookBean.current_book_new.book_desc}" style="width: 100%">
+								<p:inputTextarea value="#{bookBean.current_book_new.book_desc}">
 									<p:ajax event="change" update="@this" process="@this"/>
 								</p:inputTextarea>
 							</p:column>
@@ -94,7 +92,6 @@
 							
 							<p:column>
 								<p:datePicker value="#{bookBean.current_book_new.date_release}"
-											  style="width: 100%"
 											  label="Release Date"
 											  required="true"
 											  pattern="dd/MM/yyyy">
@@ -109,7 +106,6 @@
 							
 							<p:column>
 								<p:inputNumber value="#{bookBean.current_book_new.number_of_page}"
-											   style="width: 100%"
 											   emptyValue="0">
 									<p:ajax event="change" update="@this" process="@this"/>
 								</p:inputNumber>

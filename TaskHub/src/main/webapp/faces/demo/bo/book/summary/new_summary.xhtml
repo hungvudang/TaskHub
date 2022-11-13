@@ -24,7 +24,7 @@
 					 scrollable="true"
 					 scrollHeight="250">
 					 
-			<p:column headerText="Book Code">
+			<p:column headerText="Book Code" styleClass="align-center">
 				<p:commandLink value="#{book.book_code}"
 							   process="@this"
 							   update=":content">
@@ -32,22 +32,22 @@
 				</p:commandLink>
 			</p:column>
 			
-			<p:column headerText="Title">
+			<p:column headerText="Title" styleClass="align-center">
 				<p:outputLabel value="#{book.title}"/>
 			</p:column>
 			
-			<p:column headerText="Author">
+			<p:column headerText="Author" styleClass="align-center">
 				<p:outputLabel value="#{book.author}"/>
 			</p:column>
 			
-			<p:column headerText="Category">
+			<p:column headerText="Category" styleClass="align-center">
 				<p:outputLabel value="#{book.book_category.label}"/>
 			</p:column>
 			
-			<p:column headerText="Release Date">
-				<p:datePicker value="#{book.date_release}" 
-							  disabled="true"
-							  pattern="dd/MM/yyyy"/>
+			<p:column headerText="Release Date" styleClass="align-center">
+				<p:outputLabel value="#{book.date_release}">
+					<f:convertDateTime pattern="dd/MM/yyyy"/>
+				</p:outputLabel>
 			</p:column>
 			
 			

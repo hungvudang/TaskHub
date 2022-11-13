@@ -18,7 +18,7 @@ import taskhub.persistence.entity.bo.Book_new_hdr;
 import taskhub.persistence.entity.bo.Book_new_hdr_;
 import taskhub.persistence.entity.bo.Book_ost_hdr;
 import taskhub.persistence.entity.bo.Book_ost_hdr_;
-import taskhub.util.BeanCopper;
+import taskhub.util.BeanCoppier;
 
 @SuppressWarnings("serial")
 @Named
@@ -57,7 +57,7 @@ public class BookService extends AbstractService {
 					this.em.persist(book_ost_hdr);
 				}
 				
-				BeanCopper.copy(book_new_hdr, book_ost_hdr);
+				BeanCoppier.copy(book_new_hdr, book_ost_hdr);
 				this.em.remove(book_new_hdr);
 				book_ost_hdr.setVariation(false);
 				this.em.flush();
@@ -73,7 +73,7 @@ public class BookService extends AbstractService {
 		try {
 			final Book_new_hdr book_new_hdr = new Book_new_hdr(book_ost_hdr.getBook_code());
 			this.em.persist(book_new_hdr);
-			BeanCopper.copy(book_ost_hdr, book_new_hdr);
+			BeanCoppier.copy(book_ost_hdr, book_new_hdr);
 			book_ost_hdr.setVariation(true);
 			this.em.flush();
 			return book_new_hdr;

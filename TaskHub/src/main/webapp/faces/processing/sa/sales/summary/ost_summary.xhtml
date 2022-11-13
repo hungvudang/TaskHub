@@ -1,0 +1,56 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition >
+	<h:form>
+		<p:dataTable value="#{salesBean.sa_order_ost_hdrs}"
+					 var="order"
+					 rows="10"
+					 styleClass="pfs-summary-datatable"
+					 paginator="true"
+					 paginatorAlwaysVisible="true"
+					 paginatorPosition="bottom"
+					 scrollable="true"
+					 scrollHeight="250">
+					 
+			<p:column headerText="Vch No." styleClass="align-center">
+				<p:commandLink value="#{order.sales_order_no}"
+							   process="@this"
+							   update=":content">
+					<f:setPropertyActionListener value="#{order}" target="#{salesBean.current_Sa_order_ost_hdr}"/>
+				</p:commandLink>
+			</p:column>
+			
+			<p:column headerText="Customer Name" styleClass="align-center">
+				<p:outputLabel value="#{order.customer_name}"/>
+			</p:column>
+			
+			<p:column headerText="Customer Address">
+				<p:outputLabel value="#{order.customer_address}"/>
+			</p:column>
+			
+			<p:column headerText="Order Date" styleClass="align-center">
+				<p:outputLabel value="#{order.order_date}">
+					<f:convertDateTime pattern="dd/MM/yyyy"/>
+				</p:outputLabel>
+			</p:column>
+			
+			<p:column headerText="Ref No.">
+				<p:outputLabel value="#{order.ref_no}"/>
+			</p:column>
+			
+			<p:column headerText="Subject">
+				<p:outputLabel value="#{order.subject}"/>
+			</p:column>
+			
+			<p:column headerText="Total Amt" styleClass="align-right">
+				<p:outputLabel value="#{order.total_amt}"/>
+			</p:column>
+			
+		</p:dataTable>
+	</h:form>
+</ui:composition>
+</html>

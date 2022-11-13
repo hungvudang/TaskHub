@@ -5,8 +5,8 @@
 	  xmlns:p="http://primefaces.org/ui">
 
 <ui:composition >
-	<p:tab title="New" rendered="#{ not bookBean.guest}">
-		<ui:include src="new_summary.xhtml"/>
+	<p:tab title="New">
+		<ui:include src="new_summary.xhtml" />
 	</p:tab>
 	<p:tab title="Outstanding">
 		<ui:include src="ost_summary.xhtml" />

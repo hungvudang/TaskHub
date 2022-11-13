@@ -10,12 +10,12 @@
 <ui:composition>
 	<h:form>
 		<p:commandButton icon="pi pi-angle-left"
-						 title="Back to Summary"
+						 value="Back to Summary"
 						 process="@this"
 						 update=":content"
 						 action="#{bookBean.switchToSummary()}"
 						 style="margin: .2em .5em 0 .8em"
-						 styleClass="ui-button ui-button-flat"/>
+						 styleClass="ui-button ui-button-outlined"/>
 						 
 		<p:commandButton value="Revise"
 						 icon="pi pi-pencil"
@@ -25,7 +25,7 @@
 						 disabled="#{bookBean.current_book_ost.variation}"
 						 style="margin: .2em .5em 0 .8em"
 						 styleClass="ui-button ui-button-outlined"/>
-		<div align="center">
+		<div align="center" style="margin-top: 5px;">
 			<p:outputPanel layout="block" style="display: flex;
 												 justify-content: space-between;
 										         width: 100%;">
@@ -40,7 +40,6 @@
 							
 							<p:column colspan="3">
 								<p:outputLabel value="#{bookBean.current_book_ost.title}" 
-											   style="width: 100%"
 											   label="Title"/>
 							</p:column>
 						</p:row>
@@ -53,7 +52,6 @@
 							
 							<p:column colspan="3">
 								<p:outputLabel value="#{bookBean.current_book_ost.author}"  
-											   style="width: 100%"
 											   label="Author"/>
 							</p:column>
 						</p:row>
@@ -66,7 +64,6 @@
 							
 							<p:column colspan="3">
 								<p:inputTextarea value="#{bookBean.current_book_ost.book_desc}" 
-												 style="width: 100%" 
 												 disabled="true"/>
 							</p:column>
 						</p:row>
@@ -79,7 +76,6 @@
 							
 							<p:column>
 								<p:datePicker value="#{bookBean.current_book_ost.date_release}"
-											  style="width: 100%"
 											  label="Release Date"
 											  disabled="true"
 											  pattern="dd/MM/yyyy"/>
@@ -91,8 +87,7 @@
 							</p:column>
 							
 							<p:column>
-								<p:outputLabel value="#{bookBean.current_book_ost.number_of_page}" 
-											   style="width: 100%"/>
+								<p:outputLabel value="#{bookBean.current_book_ost.number_of_page}"/>
 							</p:column>
 						</p:row>
 						

@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:form>
+		<p:commandButton icon="pi pi-angle-left"
+						 value="Back to Summary"
+						 process="@this"
+						 update=":content"
+						 action="#{salesBean.switchToSummary()}"
+						 style="margin: .2em .5em 0 .8em"
+						 styleClass="ui-button ui-button-outlined"/>
+						 
+		<p:commandButton value="Submit"
+						 process="@this"
+						 update=":content"
+						 action="#{salesBean.submit()}"
+						 style="margin: .2em .5em 0 .8em"
+						 styleClass="ui-button ui-button-outlined">
+			<p:confirm header="Confirm" message="Are you sure ?"/>
+		</p:commandButton>
+						 
+		<p:commandButton value="Delete"
+						 process="@this"
+						 action="#{salesBean.delete()}"
+						 update=":content"
+						 style="margin: .2em .5em 0 .8em"
+						 styleClass="ui-button ui-button-outlined ui-button-danger">
+			<p:confirm header="Confirm" message="Are you sure ?"/>				 
+		</p:commandButton>
+		<p:separator/>
+		<div align="center" style="margin-top: 5px;">
+			<p:outputPanel layout="block" style="display: flex;
+												 flex-direction: column;
+												 justify-content: center;
+										         width: 100%;">
+										         
+				<p:outputPanel layout="block">
+					<ui:include src="header.xhtml">
+						<ui:param name="order" value="#{salesBean.current_Sa_order_new_hdr}" />
+					</ui:include>
+					<p:separator/>
+				</p:outputPanel>
+				
+				<p:outputPanel layout="block" style="display:flex;
+													 flex-direction: column;">
+					<div align="left">
+						<p:commandButton icon="pi pi-plus"
+										 title="Add"
+										 action="#{salesBean.newSa_order_new_det()}"
+										 process="@this"
+										 update="@(.pfs-detail-datatable)"
+										 style="margin: 0 0 .5em .5em; border: none;"
+										 styleClass="ui-button ui-button-outlined rounded-button"/>
+					</div>
+					<div style="display:block;">
+						<p:dataTable value="#{salesBean.current_Sa_order_new_hdr.sa_order_new_dets}"
+									 var="det"
+									 rows="4"
+									 styleClass="pfs-detail-datatable"
+									 paginator="true"
+									 rowIndexVar="index"
+									 stickyHeader="true"
+									 paginatorAlwaysVisible="true"
+									 paginatorPosition="bottom">
+							
+							<p:column headerText="No." styleClass="align-center column-sequence-no">
+								<p:outputLabel value="#{index + 1}"/>
+							</p:column>
+							
+							<p:column headerText="Item Type" styleClass="align-center">
+								<p:selectOneMenu value="#{det.item_type}">
+									<f:selectItems value="#{salesBean.itemTypeSelectItem}"/>									
+									<p:ajax update="@this, @(.pfs-detail-datatable)" process="@this"/>
+								</p:selectOneMenu>
+							</p:column>
+							
+							<p:column headerText="Item Code" styleClass="align-center">
+								<ui:fragment rendered="#{ItemType.I eq det.item_type}">
+									<p:selectOneMenu value="#{det.inventory_code}" >
+										<f:selectItems value="#{salesBean.inventorySelectItem}"/>									
+										<p:ajax update="@this" process="@this"/>
+									</p:selectOneMenu>
+								</ui:fragment>
+								
+								<ui:fragment rendered="#{ItemType.S eq det.item_type}">
+									<p:selectOneMenu value="#{det.service_code}">
+										<f:selectItems value="#{salesBean.serviceSelectItem}"/>									
+										<p:ajax update="@this" process="@this"/>
+									</p:selectOneMenu>
+								</ui:fragment>
+							</p:column>
+							
+							<p:column headerText="Item Remark">
+								<p:inputText value="#{det.item_remark}">
+									<p:ajax update="@this" process="@this"/>
+								</p:inputText>
+							</p:column>
+							
+							<p:column headerText="Qty" styleClass="align-center">
+								<p:inputNumber value="#{det.qty}" 
+											   emptyValue="0.0">
+									<p:ajax update="@this, @(.pfs-detail-datatable)" process="@this"/>
+								</p:inputNumber>
+							</p:column>
+							
+							<p:column headerText="UOM" styleClass="align-center">
+								<p:selectOneMenu value="#{det.uom_code}">
+									<f:selectItems value="#{salesBean.uomTypeSelectItem}"/>									
+									<p:ajax update="@this" process="@this"/>
+								</p:selectOneMenu>
+							</p:column>
+							
+							<p:column headerText="Price" styleClass="align-center">
+								<p:inputNumber value="#{det.gross_price}" emptyValue="0.0"> 
+									<p:ajax update="@this, @(.pfs-detail-datatable)" process="@this"/>
+								</p:inputNumber>
+							</p:column>
+							
+							<p:column headerText="Amt" styleClass="align-center">
+								<p:outputLabel value="#{det.base_extended_amt}"/>
+							</p:column>
+							
+							<p:column headerText="Del" styleClass="align-center"> 
+								<p:commandButton icon="pi pi-trash"
+												 action="#{salesBean.deleteSa_order_new_det()}"
+												 process="@this"
+												 update="@(.pfs-detail-datatable)"
+												 styleClass="ui-button rounded-button ui-button-danger"> 
+									<f:param name="cid" value="#{conversationHelper.currentConversationId}"/>
+									<f:setPropertyActionListener value="#{det}" target="#{salesBean.selected_Sa_order_new_det}"/>
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</p:outputPanel>
+			</p:outputPanel>
+		</div>
+	</h:form>
+</ui:composition>
+</html>
