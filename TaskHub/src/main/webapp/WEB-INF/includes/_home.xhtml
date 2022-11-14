@@ -5,16 +5,17 @@
 	  xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
-		<ui:param name="srcForm" value="#{formSwitcher.locateSrcForm()}" />
+	<p:outputPanel layout="block" styleClass="full-width full-height">
 		<ui:include src="_header_bar.xhtml"/>
-		<ui:fragment rendered="#{srcForm eq null}">
-			<div align="center">
+		<ui:param name="locatePathForm" value="#{viewParamHolder.formInfo.locatePathForm}" />
+		
+		<ui:fragment rendered="#{locatePathForm eq 'HOME'}" >
 				<h3>Wellcome to TaskHub</h3>
-			</div>
 		</ui:fragment>
-	
-		<ui:fragment rendered="#{srcForm ne null}">
-			<ui:include src="#{srcForm}" />
+		
+		<ui:fragment rendered="#{locatePathForm ne 'HOME'}" >
+				<ui:include src="#{locatePathForm}" />
 		</ui:fragment>
+	</p:outputPanel>
 </ui:composition>
 </html>

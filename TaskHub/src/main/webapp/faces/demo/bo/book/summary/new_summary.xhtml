@@ -5,7 +5,7 @@
 	  xmlns:p="http://primefaces.org/ui">
 
 <ui:composition >
-	<h:form styleClass="full-height">
+	<h:form>
 		<p:commandButton value="New"
 						 icon="pi pi-plus"
 						 process="@this"
@@ -20,9 +20,7 @@
 					 styleClass="pfs-summary-datatable"
 					 paginator="true"
 					 paginatorAlwaysVisible="true"
-					 paginatorPosition="bottom"
-					 scrollable="true"
-					 scrollHeight="250">
+					 paginatorPosition="bottom">
 					 
 			<p:column headerText="Book Code" styleClass="align-center">
 				<p:commandLink value="#{book.book_code}"

@@ -9,33 +9,38 @@
 	<ui:param name="loggedIn" value="#{authServiceHelper.loggedIn}" />
 	<h:form>
 		<p:menubar>
-			 <p:menuitem process="@this"
-			 			 update=":content"
+			 <p:menuitem ajax="false"
+			 			 immediate="true"
 			 			 action="#{formSwitcher.home()}">
 			 	<i class="pi pi-home" 
 			 	   style="font-size: 1.3rem;"/>
 			 </p:menuitem>
 			 
 				 <p:submenu label="Processing" rendered="#{loggedIn}">
-				 	 <p:menuitem value="Sales" action="#{formSwitcher._switch(formCode.SALES)}" process="@this" update=":content"> 
-				 	 </p:menuitem>
+				 	 <p:menuitem value="Sales" 
+				 	 			 action="#{formSwitcher._switch(formCode.SALES)}" 
+						 	 	 ajax="false"
+					 			 immediate="true"/> 
 				 </p:submenu>
 				 
 				 <p:submenu label="Master Setup" rendered="#{loggedIn}">
-				 	 <p:menuitem value="Customer" action="#{formSwitcher._switch(formCode.CUSTOMER)}" process="@this" update=":content"> 
-				 	 </p:menuitem>
+				 	 <p:menuitem value="Customer" 
+				 	 			 action="#{formSwitcher._switch(formCode.CUSTOMER)}" 
+				 	 			 ajax="false"
+					 			 immediate="true"/> 
 				 </p:submenu>
 			 
 			  <p:submenu label="Demo">
-			  	 <p:menuitem value="Book Management" action="#{formSwitcher._switch(formCode.BOOK_MANAGEMENT)}" process="@this" update=":content"> 
-			 	 </p:menuitem>
+			  	 <p:menuitem value="Book Management" 
+			  	 			 action="#{formSwitcher._switch(formCode.BOOK_MANAGEMENT)}" 
+			  	 			 ajax="false"
+					 		 immediate="true"/> 
 			 </p:submenu>
 			
 		 	<f:facet name="options">
 		 		<ui:fragment rendered="#{not loggedIn}">
 		 			<p:commandButton value="Login"
 		 							 action="#{formSwitcher.switchLogInView()}"
-		 							 process="@this"
 		 							 icon="pi pi-sign-in"
 		 							 ajax="false"
 		 							 styleClass="ui-button-raised ui-button-secondary ui-button-flat" />
@@ -45,9 +50,8 @@
 		 			<ui:param name="alias" value="#{authServiceHelper.currentUser.alias}" />
 		 			
 		 		   	<p:commandLink title="#{alias}"
-		 		   				   process="@this"
-		 		   				   update="@this"
 		 		   				   ajax="false"
+		 		   				   immediate="true"
 		 		   				   action="#{formSwitcher.switchLogInView()}">
 		 		   				   
 			 		   <p:avatar icon="pi pi-user"
@@ -59,7 +63,7 @@
 			 		   <p:confirm header="Confirm" message="Do you want to logout ?"/>
 		 		   	</p:commandLink>
 		 		</ui:fragment>
-            </f:facet>
+	           </f:facet>
 		</p:menubar>
 	</h:form>
 </ui:composition>

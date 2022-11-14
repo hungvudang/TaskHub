@@ -11,30 +11,30 @@
 	<h:head>
 		<title>TaskHub</title>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-		<meta name="viewport" content="initial-scale=0.50" />
+		<meta name="viewport" content="initial-scale=1.0" />
 	</h:head> 
 	
 	<h:body>
-		<ui:include src="/WEB-INF/includes/_scripts_and_stylesheets.xhtml" />
-		<p:growl id="messages" showDetail="true">
-			<p:autoUpdate/>
-		</p:growl>
-		
-		<h:panelGroup styleClass="container" onkeypress="disableEnterKeyFormSubmission(event);" layout="block">
-			<ui:insert name="overlaysAndPopupPanels" />
+			<ui:include src="/WEB-INF/includes/_scripts_and_stylesheets.xhtml" />
+			<p:growl id="messages" showDetail="true">
+				<p:autoUpdate/>
+			</p:growl>
 			
-			<p:outputPanel id="content" styleClass="wapper full-height">
-				<ui:insert name="content" />
+			<f:view>
+				<h:panelGroup styleClass="container" onkeypress="disableEnterKeyFormSubmission(event);" 
+							  layout="block">
+					<ui:insert name="overlaysAndPopupPanels" />
+					
+					<p:outputPanel id="content" layout="block">
+						<ui:insert name="content" />
+					</p:outputPanel>
+				</h:panelGroup>
 				
-				<!-- FOOTER -->
-				<div class="card full-width" style="height: 30px;"/>
-			</p:outputPanel>
-		</h:panelGroup>
-		
-		
-		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
-            <p:commandButton value="No" styleClass="ui-confirmdialog-no ui-button-flat"/>
-            <p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" />
-        </p:confirmDialog>
+				
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+		            <p:commandButton value="No" styleClass="ui-confirmdialog-no ui-button-flat"/>
+		            <p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" />
+		        </p:confirmDialog>
+			</f:view>
 	</h:body>
 </html>

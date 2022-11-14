@@ -1,20 +1,16 @@
 package taskhub.persistence.entity;
 
-import java.io.Serializable;
+import java.util.Arrays;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
+import org.apache.commons.lang3.StringUtils;
 
 import taskhub.persistence.constant.FormCode;
 
-@SuppressWarnings("serial")
-@Named
-@RequestScoped
-public class FormInfo implements Serializable{
+public class FormInfo {
 	private FormCode formCode;
 
-	
-	public FormInfo() {
+	protected FormInfo() {
+
 	}
 
 	public FormInfo(FormCode formCode) {
@@ -25,8 +21,20 @@ public class FormInfo implements Serializable{
 		return this.formCode;
 	}
 
+	public String getLocatePathForm() {
+		if (this.formCode != null) {
+			return "/" + StringUtils.join(Arrays.asList("faces", //
+					formCode.getContext(), //
+					formCode.getModule_code(), //
+					formCode.getForm_code(), //
+					"_" + formCode.name() + ".xhtml"), //
+					"/");
+		}
+		return "HOME";
+	}
+
 	public void setFormCode(FormCode formCode) {
 		this.formCode = formCode;
 	}
-	
+
 }

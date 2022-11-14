@@ -9,33 +9,130 @@
 
 <ui:composition>
 	<h:form>
-		<p:commandButton icon="pi pi-angle-left"
-						 value="Back to Summary"
-						 process="@this"
-						 update=":content"
-						 action="#{salesBean.switchToSummary()}"
-						 style="margin: .2em .5em 0 .8em"
-						 styleClass="ui-button ui-button-outlined"/>
-						 
-		<p:commandButton value="Submit"
-						 process="@this"
-						 update=":content"
-						 action="#{salesBean.submit()}"
-						 style="margin: .2em .5em 0 .8em"
-						 styleClass="ui-button ui-button-outlined">
-			<p:confirm header="Confirm" message="Are you sure ?"/>
-		</p:commandButton>
-						 
-		<p:commandButton value="Delete"
-						 process="@this"
-						 action="#{salesBean.delete()}"
-						 update=":content"
-						 style="margin: .2em .5em 0 .8em"
-						 styleClass="ui-button ui-button-outlined ui-button-danger">
-			<p:confirm header="Confirm" message="Are you sure ?"/>				 
-		</p:commandButton>
+		<p:outputPanel layout="block" styleClass="full-width" style="height: 10%;">
+			<p:commandButton icon="pi pi-angle-left"
+							 value="Back to Summary"
+							 process="@this"
+							 update=":content"
+							 action="#{salesBean.switchToSummary()}"
+							 style="margin: .2em .5em 0 .8em"
+							 styleClass="ui-button ui-button-outlined"/>
+							 
+			<p:commandButton value="Submit"
+							 process="@this"
+							 update=":content"
+							 action="#{salesBean.submit()}"
+							 style="margin: .2em .5em 0 .8em"
+							 styleClass="ui-button ui-button-outlined">
+				<p:confirm header="Confirm" message="Are you sure ?"/>
+			</p:commandButton>
+							 
+			<p:commandButton value="Delete"
+							 process="@this"
+							 action="#{salesBean.delete()}"
+							 update=":content"
+							 style="margin: .2em .5em 0 .8em"
+							 styleClass="ui-button ui-button-outlined ui-button-danger">
+				<p:confirm header="Confirm" message="Are you sure ?"/>				 
+			</p:commandButton>
+		</p:outputPanel>
 		<p:separator/>
-		<div align="center" style="margin-top: 5px;">
+		<p:outputPanel layout="block" styleClass="full-width">
+			<p:outputPanel layout="block" styleClass="full-width" 
+						   style="height: 15em; overflow: auto;">
+				<ui:include src="header.xhtml">
+					<ui:param name="order" value="#{salesBean.current_Sa_order_new_hdr}" />
+				</ui:include>
+			</p:outputPanel>
+			<p:separator/>
+			<p:outputPanel layout="block">
+					<div align="left">
+						<p:commandButton icon="pi pi-plus"
+										 title="Add"
+										 action="#{salesBean.newSa_order_new_det()}"
+										 process="@this"
+										 update="@(.pfs-detail-datatable)"
+										 style="margin: 0 0 .5em .5em; border: none;"
+										 styleClass="ui-button ui-button-outlined rounded-button"/>
+					</div>
+					<p:dataTable value="#{salesBean.current_Sa_order_new_hdr.sa_order_new_dets}"
+								 var="det"
+								 rows="4"
+								 styleClass="pfs-detail-datatable"
+								 tableStyle="overflow: auto;"
+								 paginator="true"
+								 rowIndexVar="index"
+								 paginatorAlwaysVisible="true"
+								 paginatorPosition="bottom">
+						
+						<p:column headerText="Item Type" styleClass="align-center">
+							<p:selectOneMenu value="#{det.item_type}">
+								<f:selectItems value="#{salesBean.itemTypeSelectItem}"/>									
+								<p:ajax update="@this, @(.pfs-detail-datatable)" process="@this"/>
+							</p:selectOneMenu>
+						</p:column>
+						
+						<p:column headerText="Item Code" styleClass="align-center">
+							<ui:fragment rendered="#{ItemType.I eq det.item_type}">
+								<p:selectOneMenu value="#{det.inventory_code}" >
+									<f:selectItems value="#{salesBean.inventorySelectItem}"/>									
+									<p:ajax update="@this" process="@this"/>
+								</p:selectOneMenu>
+							</ui:fragment>
+							
+							<ui:fragment rendered="#{ItemType.S eq det.item_type}">
+								<p:selectOneMenu value="#{det.service_code}">
+									<f:selectItems value="#{salesBean.serviceSelectItem}"/>									
+									<p:ajax update="@this" process="@this"/>
+								</p:selectOneMenu>
+							</ui:fragment>
+						</p:column>
+						
+						<p:column headerText="Item Remark">
+							<p:inputText value="#{det.item_remark}">
+								<p:ajax update="@this" process="@this"/>
+							</p:inputText>
+						</p:column>
+						
+						<p:column headerText="Qty" styleClass="align-center">
+							<p:inputNumber value="#{det.qty}" 
+										   emptyValue="0.0">
+								<p:ajax update="@this, @(.pfs-detail-datatable)" process="@this"/>
+							</p:inputNumber>
+						</p:column>
+						
+						<p:column headerText="UOM" styleClass="align-center">
+							<p:selectOneMenu value="#{det.uom_code}">
+								<f:selectItems value="#{salesBean.uomTypeSelectItem}"/>									
+								<p:ajax update="@this" process="@this"/>
+							</p:selectOneMenu>
+						</p:column>
+						
+						<p:column headerText="Price" styleClass="align-center">
+							<p:inputNumber value="#{det.gross_price}" emptyValue="0.0"> 
+								<p:ajax update="@this, @(.pfs-detail-datatable)" process="@this"/>
+							</p:inputNumber>
+						</p:column>
+						
+						<p:column headerText="Amt" styleClass="align-center">
+							<p:outputLabel value="#{det.base_extended_amt}"/>
+						</p:column>
+						
+						<p:column headerText="Del" styleClass="align-center"> 
+							<p:commandButton icon="pi pi-trash"
+											 action="#{salesBean.deleteSa_order_new_det()}"
+											 process="@this"
+											 update="@(.pfs-detail-datatable)"
+											 styleClass="ui-button rounded-button ui-button-danger"> 
+								<f:param name="cid" value="#{conversationHelper.currentConversationId}"/>
+								<f:setPropertyActionListener value="#{det}" target="#{salesBean.selected_Sa_order_new_det}"/>
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+			</p:outputPanel>
+		</p:outputPanel>
+		
+		<!-- <div align="center" style="margin-top: 5px;">
 			<p:outputPanel layout="block" style="display: flex;
 												 flex-direction: column;
 												 justify-content: center;
@@ -141,7 +238,7 @@
 					</div>
 				</p:outputPanel>
 			</p:outputPanel>
-		</div>
+		</div> -->
 	</h:form>
 </ui:composition>
 </html>

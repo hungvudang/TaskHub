@@ -1,16 +1,6 @@
-
-.container {
-	position: fixed;
-	left: 0;
-	top: 0;
-	width: 100%;
+html, body {
+	margin: 0;
 	height: 100%;
-}
-
-.container-flex {
-	width: 100%;
-	height: 100%;
-	display: flex;
 }
 
 .justify-content-center {
@@ -50,11 +40,6 @@
 	display: none;
 }
 
-body .ui-datatable thead th {
-	padding: .7em .7em;
-	text-align: center;
-}
-
 .align-center {
 	text-align: center !important;
 }
@@ -67,19 +52,8 @@ body .ui-datatable thead th {
 	text-align: left !important;
 }
 
-body .ui-datatable .ui-datatable-header {
-	padding: 5px;
-	background-color: transparent;
-}
-
 body .ui-inputfield {
 	width: 100% !important;
-}
-
-
-.pfs-detail-datatable .ui-datatable-tablewrapper {
-  overflow: auto;
-  height: 12em;
 }
 
 .column-sequence-no {

@@ -12,6 +12,7 @@ import javax.persistence.NonUniqueResultException;
 
 import taskhub.action.service.AbstractService;
 import taskhub.action.service.form.FormSwitcher;
+import taskhub.cdi.Instances;
 import taskhub.cdi.helper.ConversationHelper;
 import taskhub.persistence.QueryHelper;
 import taskhub.persistence.entity.LoginModel;
@@ -24,9 +25,6 @@ import taskhub.persistence.entity.mt.Mt_user_;
 public class AuthServiceHelper extends AbstractService {
 
 	private static final ThreadLocal<Mt_user> LOCAL_CONTEXT = new ThreadLocal<Mt_user>();
-
-	@Inject
-	private FormSwitcher formSwitcher;
 
 	@Inject
 	private LoginModel model;
@@ -44,7 +42,7 @@ public class AuthServiceHelper extends AbstractService {
 	public void login() {
 		if (this.model != null) {
 			if (this.authenticate()) {
-				this.formSwitcher.home();
+				Instances.get(FormSwitcher.class).home();
 			} else {
 				AuthServiceHelper.LOCAL_CONTEXT.set(null);
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
