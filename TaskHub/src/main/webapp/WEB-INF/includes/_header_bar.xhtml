@@ -18,22 +18,25 @@
 			 
 				 <p:submenu label="Processing" rendered="#{loggedIn}">
 				 	 <p:menuitem value="Sales" 
-				 	 			 action="#{formSwitcher._switch(formCode.SALES)}" 
-						 	 	 ajax="false"
+				 	 			 action="#{formSwitcher._switch(formCode.SALES)}"
+				 	 			 process="@this"
+				 	 			 update=":content"
 					 			 immediate="true"/> 
 				 </p:submenu>
 				 
 				 <p:submenu label="Master Setup" rendered="#{loggedIn}">
 				 	 <p:menuitem value="Customer" 
-				 	 			 action="#{formSwitcher._switch(formCode.CUSTOMER)}" 
-				 	 			 ajax="false"
+				 	 			 action="#{formSwitcher._switch(formCode.CUSTOMER)}"
+				 	 			 process="@this"
+				 	 			 update=":content" 
 					 			 immediate="true"/> 
 				 </p:submenu>
 			 
 			  <p:submenu label="Demo">
 			  	 <p:menuitem value="Book Management" 
-			  	 			 action="#{formSwitcher._switch(formCode.BOOK_MANAGEMENT)}" 
-			  	 			 ajax="false"
+			  	 			 action="#{formSwitcher._switch(formCode.BOOK_MANAGEMENT)}"
+			  	 			 process="@this"
+				 	 		 update=":content"
 					 		 immediate="true"/> 
 			 </p:submenu>
 			

@@ -1,7 +1,5 @@
 package taskhub.action.service.helper;
 
-import java.util.Objects;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -25,18 +23,23 @@ import taskhub.persistence.entity.mt.Mt_user_;
 public class AuthServiceHelper extends AbstractService {
 
 	private static final ThreadLocal<Mt_user> LOCAL_CONTEXT = new ThreadLocal<Mt_user>();
-
+	
 	@Inject
 	private LoginModel model;
 
 	private boolean guest = false;
+	private boolean loggedIn = false;
 
 	public boolean isLoggedIn() {
-		return !Objects.isNull(LOCAL_CONTEXT.get());
+		return this.loggedIn;
+	}
+	
+	public void setLoggedIn(final boolean b) {
+		this.loggedIn = b;
 	}
 	
 	public Mt_user getCurrentUser() {
-		return AuthServiceHelper.LOCAL_CONTEXT.get();
+		return AuthServiceHelper.LOCAL_CONTEXT.get() ;
 	}
 
 	public void login() {
@@ -45,6 +48,7 @@ public class AuthServiceHelper extends AbstractService {
 				Instances.get(FormSwitcher.class).home();
 			} else {
 				AuthServiceHelper.LOCAL_CONTEXT.set(null);
+				this.loggedIn = true;
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 						"Faild", "You have entered invalid username or password. Please try again."));
 			}
@@ -54,6 +58,7 @@ public class AuthServiceHelper extends AbstractService {
 	public void loginAsGuest() {
 		this.guest = true;
 		AuthServiceHelper.LOCAL_CONTEXT.set(null);
+		this.loggedIn = false;
 		ConversationHelper.beginIfTransient();
 	}
 
@@ -65,9 +70,11 @@ public class AuthServiceHelper extends AbstractService {
 		try {
 			final Mt_user userAuth = this.em.createQuery(queryHelper.query).setMaxResults(1).getSingleResult();
 			AuthServiceHelper.LOCAL_CONTEXT.set(userAuth);
+			this.loggedIn = true;
 			return true;
 		} catch (NoResultException | NonUniqueResultException e) {
 			AuthServiceHelper.LOCAL_CONTEXT.set(null);
+			this.loggedIn = false;
 			return false;
 		} finally {
 			this.guest = false;
@@ -76,6 +83,7 @@ public class AuthServiceHelper extends AbstractService {
 
 	public void clear() {
 		this.guest = false;
+		this.loggedIn = false;
 		AuthServiceHelper.LOCAL_CONTEXT.set(null);
 	}
 
